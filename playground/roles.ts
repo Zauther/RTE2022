@@ -73,12 +73,11 @@ export function createRoles($node: any, ) {
     $role.id = role.name;
     $role.style = "background-image: url('"+ role.image + "'); background-size: cover; width: 80px; height: 80px; border-radius: 50%; margin: 0 20px;";
     $role.onclick = async function () {
-      if (rtc?.client && rtc?.localAudioTrack) {
-        await rtc.client.join(options.appId, options.channel, options.token, options.uid);
-        rtc.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-        await rtc.client.publish([rtc.localAudioTrack]);  
-        console.log("publish success!");
-      } 
+      console.log("role onclick: ", $role);
+      rtc.client && await rtc.client.join(options.appId, options.channel, options.token, options.uid);
+      rtc.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+      rtc.client && await rtc.client.publish([rtc.localAudioTrack]);  
+      console.log("publish success!");
     }
 
     // document.getElementById("leave").onclick = async function () {
