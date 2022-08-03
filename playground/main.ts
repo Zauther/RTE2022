@@ -55,7 +55,7 @@ function setup() {
 
   const $roles = $app.appendChild(document.createElement("div"));
   $roles.id = "roles";
-  $roles.setAttribute("style", "position: absolute; bottom: 5px; left: 50%; transform: translate(-50%, 0); display: flex;");
+  $roles.setAttribute("style", "position: absolute; bottom: 5px; left: 50%; transform: translate(-50%, 0); display: flex; z-index: 1000;");
   createRoles($roles);
 
   const $resetBtn = $controls.appendChild(document.createElement("button"));
