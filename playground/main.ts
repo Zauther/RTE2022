@@ -1,8 +1,9 @@
 import { createFastboard, mount, Theme } from "@netless/fastboard";
 import { get_uid } from "./query";
 import { registering } from "./register";
+import { createRoles } from "./roles";
 import "./style.css";
-import AgoraRTC from "agora-rtc-sdk-ng"
+// import AgoraRTC from "agora-rtc-sdk-ng"
 
 main().catch(console.error);
 
@@ -52,6 +53,11 @@ function setup() {
   const $controls = $app.appendChild(document.createElement("div"));
   $controls.id = "controls";
 
+  const $roles = $app.appendChild(document.createElement("div"));
+  $roles.id = "roles";
+  $roles.setAttribute("style", "position: absolute; bottom: 5px; left: 50%; transform: translate(-50%, 0); display: flex;");
+  createRoles($roles);
+
   const $resetBtn = $controls.appendChild(document.createElement("button"));
   $resetBtn.id = "reset";
   $resetBtn.title = "Remove all apps & Clear whiteboard";
@@ -79,18 +85,7 @@ function setup() {
   prefersDark.addEventListener("change", toggleTheme);
   $themeBtn.onclick = toggleTheme.bind(null, undefined);
 
-
- 
-
-  const $agoraRTCJoin = $controls.appendChild(document.createElement("button"));
-  $agoraRTCJoin.id = "Voice";
-  $agoraRTCJoin.title = "Voice";
-  $agoraRTCJoin.textContent = "Voice";
-  function 
-
-
   return {
-
     $whiteboard,
     onReset: (fn: () => void) => (onResetCallback = fn),
     onThemeChanged: (fn: (theme: Theme) => void) => (themeCallbacks.push(fn), fn(theme)),
