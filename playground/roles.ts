@@ -62,6 +62,13 @@ export function createRoles($node: any, ) {
   });
 
   roles.forEach(role => {
+    // 添加RTC
+    let options = {
+      appId: "16cca950aca74708a9c3f1e2b7f2e655",
+      channel: "rte2022",
+      token: "00616cca950aca74708a9c3f1e2b7f2e655IAAb0G2/AjNkz7UgXpbzI1FG8gRXf7SZck26CCZBB2vntt15FHwAAAAAEABUJOp9zV3qYgEAAQDMXepi",
+      uid: role.uid
+    };
     const $role = $node.appendChild(document.createElement("div"));
     $role.id = role.name;
     $role.style = "background-image: url('"+ role.image + "'); background-size: cover; width: 80px; height: 80px; border-radius: 50%; margin: 0 20px;";
@@ -81,13 +88,5 @@ export function createRoles($node: any, ) {
     //   // Leave the channel.
     //   await rtc.client.leave();
     // }
-
-    // 添加RTC
-    let options = {
-      appId: "16cca950aca74708a9c3f1e2b7f2e655",
-      channel: "rte2022",
-      token: "00616cca950aca74708a9c3f1e2b7f2e655IAAb0G2/AjNkz7UgXpbzI1FG8gRXf7SZck26CCZBB2vntt15FHwAAAAAEABUJOp9zV3qYgEAAQDMXepi",
-      uid: role.uid
-    };
   })
 }
