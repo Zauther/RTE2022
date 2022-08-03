@@ -5,27 +5,27 @@ const roles = [
   {
     uid: 111111,
     name: "girl1",
-    image: '../assets/girl1.png'
+    image: 'https://p0.meituan.net/roleplay/f4198ca37f6af080d6bc0f3ddae1f872530181281.png'
   },
   {
     uid: 222222,
     name: "girl2",
-    image: '../assets/girl2.png'
+    image: 'https://p0.meituan.net/roleplay/500051c98d58c5ec3d5d0a4ccac8655e530668143.png'
   },
   {
     uid: 333333,
     name: "boy1",
-    image: '../assets/boy1.png'
+    image: 'https://p0.meituan.net/roleplay/378c0eeb8f9c04fd9d4fb4e78896423a103715896.jpg'
   },
   {
     uid: 444444,
     name: "boy2",
-    image: '../assets/boy2.png'
+    image: 'https://p0.meituan.net/roleplay/5459ea2d0fd3ee0b8a42a267e20cd561544014163.png'
   },
   {
     uid: 555555,
     name: "boy3",
-    image: '../assets/boy3.png'
+    image: 'https://p0.meituan.net/roleplay/8648220bf8862aa0a543ceb6174fb8cb516128541.png'
   },
 ]
 
@@ -71,7 +71,7 @@ export function createRoles($node: any, ) {
     };
     const $role = $node.appendChild(document.createElement("div"));
     $role.id = role.name;
-    $role.style = "background-image: url('"+ getImageUrl(role.image) + "'); background-size: cover; width: 80px; height: 80px; border-radius: 50%; margin: 0 20px;";
+    $role.style = "background-image: url('"+ role.image + "'); background-size: cover; width: 80px; height: 80px; border-radius: 50%; margin: 0 20px;";
     $role.onclick = async function () {
       if (rtc?.client && rtc?.localAudioTrack) {
         await rtc.client.join(options.appId, options.channel, options.token, options.uid);
@@ -89,8 +89,4 @@ export function createRoles($node: any, ) {
     //   await rtc.client.leave();
     // }
   })
-}
-
-function getImageUrl(url: string) {
-  return new URL(url, import.meta.url).href
 }
