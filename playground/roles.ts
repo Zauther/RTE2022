@@ -71,7 +71,7 @@ export function createRoles($node: any, ) {
     };
     const $role = $node.appendChild(document.createElement("div"));
     $role.id = role.name;
-    $role.style = "background-image: url('"+ role.image + "'); background-size: cover; width: 80px; height: 80px; border-radius: 50%; margin: 0 20px;";
+    $role.style = "background-image: url('"+ getImageUrl(role.image) + "'); background-size: cover; width: 80px; height: 80px; border-radius: 50%; margin: 0 20px;";
     $role.onclick = async function () {
       if (rtc?.client && rtc?.localAudioTrack) {
         await rtc.client.join(options.appId, options.channel, options.token, options.uid);
@@ -89,4 +89,8 @@ export function createRoles($node: any, ) {
     //   await rtc.client.leave();
     // }
   })
+}
+
+function getImageUrl(url: string) {
+  return new URL(url, import.meta.url).href
 }
