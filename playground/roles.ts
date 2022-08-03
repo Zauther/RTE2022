@@ -66,7 +66,7 @@ export function createRoles($node: any, ) {
     let options = {
       appId: "16cca950aca74708a9c3f1e2b7f2e655",
       channel: "rte2022",
-      token: "00616cca950aca74708a9c3f1e2b7f2e655IAAb0G2/AjNkz7UgXpbzI1FG8gRXf7SZck26CCZBB2vntt15FHwAAAAAEABUJOp9zV3qYgEAAQDMXepi",
+      token: "00616cca950aca74708a9c3f1e2b7f2e655IADq7BLcXqQRNHs5CIGsoUpVFy+6ApSYoCpDY8zNsdeuJN15FHwAAAAAEABUJOp9ENPrYgEAAQAQ0+ti",
       uid: role.uid
     };
     const $role = $node.appendChild(document.createElement("div"));
