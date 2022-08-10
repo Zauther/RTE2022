@@ -1,5 +1,5 @@
 {
-  "include": ["playground", "src"],
+  "include": ["playground", "src","scripts","rtc"],
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,

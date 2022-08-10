@@ -1,5 +1,7 @@
 import AgoraRTC, { IAgoraRTCClient, IMicrophoneAudioTrack } from "agora-rtc-sdk-ng";
 
+import RtcTokenBuilder from'../rtc/RtcTokenBuilder';
+
 
 const roles = [ 
   {
@@ -66,7 +68,7 @@ export function createRoles($node: any, ) {
     let options = {
       appId: "16cca950aca74708a9c3f1e2b7f2e655",
       channel: "rte2022",
-      token: "00616cca950aca74708a9c3f1e2b7f2e655IADq7BLcXqQRNHs5CIGsoUpVFy+6ApSYoCpDY8zNsdeuJN15FHwAAAAAEABUJOp9ENPrYgEAAQAQ0+ti",
+      token: "00616cca950aca74708a9c3f1e2b7f2e655IAAhcqvVmCrSglq5guPGbLMVINMCNSaowDQIhvpUHOppRt15FHwAAAAAEABUJOp99m/yYgEAAQD2b/Ji",
       uid: role.uid
     };
     const $role = $node.appendChild(document.createElement("div"));
