@@ -45,12 +45,12 @@ apps.push({
             name: "2",
             ppt: {
               height: 1010,
-              src: 'https://scripts-res.oss-cn-shanghai.aliyuncs.com/%E5%88%98%E4%BC%AF%E9%92%8A.pdf?Expires=1660176383&OSSAccessKeyId=TMP.3Kg7SEu5jyCHkVELcVXJMJqpjUCtEwec6u2iSYmoWrNXKxHbJbNoCheHuTYZ9yDDkZPbc4DRRCZNjmbZpeyJWdcSQS3Mg3&Signature=Tn7DcuEWzjvJABDsj6iBEuVNLI4%3D',
+              src: 'https://scripts-res.oss-cn-shanghai.aliyuncs.com/%E5%88%98%E4%BC%AF%E9%92%8A.pdf?Expires=1660176957&OSSAccessKeyId=TMP.3Kg7SEu5jyCHkVELcVXJMJqpjUCtEwec6u2iSYmoWrNXKxHbJbNoCheHuTYZ9yDDkZPbc4DRRCZNjmbZpeyJWdcSQS3Mg3&Signature=emelSTgrBuv2b1xS2ahsXFaE1PQ%3D',
               // src: "https://convertcdn.netless.link/staticConvert/18140800fe8a11eb8cb787b1c376634e/1.png",
               // src: "https://cwiki.cn/downloads/%E5%B9%B4%E8%BD%AE/%E5%B0%81%E9%9D%A2.PDF",
               // src: 'https://cwiki.cn/downloads/%E5%B9%B4%E8%BD%AE/%E5%89%A7%E6%9C%AC/%E5%88%98%E4%BC%AF%E9%92%8A.PDF',
               // src: "https://scripts-res.oss-cn-shanghai.aliyuncs.com/%E5%B0%81%E9%9D%A2.pdf?Expires=1660175887&OSSAccessKeyId=TMP.3Kg7SEu5jyCHkVELcVXJMJqpjUCtEwec6u2iSYmoWrNXKxHbJbNoCheHuTYZ9yDDkZPbc4DRRCZNjmbZpeyJWdcSQS3Mg3&Signature=6w1CYrLdEo9RcqthYFiNoPe5%2FhU%3D",
-              width: 1000714,
+              width: 714,
             }},
           // {
           //   name: "1",
