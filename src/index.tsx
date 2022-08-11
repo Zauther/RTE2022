@@ -6,18 +6,20 @@ import { get_uid } from "./utils/common";
 import './index.less';
 
 import Roles from "./module/roles";
-
+import {registering} from "./module/apps/apps"
 
 function App() {
-  register({
-    kind: "Slide",
-    appOptions: {
-      // 打开这个选项显示 debug 工具栏
-      debug: false,
-    },
-    src: Slide,
-  });
-  apps.clear()
+  registering();
+
+  // register({
+  //   kind: "Slide",
+  //   appOptions: {
+  //     // 打开这个选项显示 debug 工具栏
+  //     debug: true,
+  //   },
+  //   src: Slide,
+  // });
+  // apps.clear()
 
   const app = useFastboard(() => ({
     sdkConfig: {
