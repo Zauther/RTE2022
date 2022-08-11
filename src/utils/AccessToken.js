@@ -1,4 +1,4 @@
-import md5 from "js-md5";
+import crypto from "crypto-js";
 import crc32 from "crc-32";
 import { UINT32 } from "cuint";
 import { Buffer } from "buffer";
@@ -92,7 +92,8 @@ export const priviledges = {
 };
 
 var encodeHMac = function (key, message) {
-  return md5.create(key).update(message).digest();
+  // return crypto.createHmac('sha256', key).update(message).digest();
+  return crypto.HmacSHA256(message, key).toString();
 };
 
 var ByteBuf = function () {

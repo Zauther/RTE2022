@@ -142,7 +142,14 @@ export default function Roles(props: any) {
         // token: "00616cca950aca74708a9c3f1e2b7f2e655IADq7BLcXqQRNHs5CIGsoUpVFy+6ApSYoCpDY8zNsdeuJN15FHwAAAAAEABUJOp9ENPrYgEAAQAQ0+ti",
         uid: role.uid
       };
-      options.token = RtcTokenBuilder.buildTokenWithUid(options.appId, "5e9a25fcf32d401381fe53c6974051c3", "rte2022", role.uid, Role.PUBLISHER, Math.floor(Date.now() / 1000) + 3600);
+      options.token = RtcTokenBuilder.buildTokenWithUid(
+        options.appId, // appID
+        "5e9a25fcf32d401381fe53c6974051c3", // appCertificate
+        "rte2022", // channelName
+        role.uid,  // uid
+        Role.PUBLISHER, // role
+        Math.floor(Date.now() / 1000) + 3600 // privilegeExpiredTs
+      );
       console.log("options.token  ======= ", options.token )
       items.push(
         <div key={role.uid} className={`role-item ${role.choosed ? 'role-item-choosed' : 'role-item-not-choosed'}`}
