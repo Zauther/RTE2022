@@ -1,19 +1,13 @@
 import { defineConfig } from "vite";
 import path from "path";
-import reactRefresh from '@vitejs/plugin-react-refresh'
 import pkg from "./package.json";
-import requireTransfrom from "vite-plugin-require-transform";
+import react from '@vitejs/plugin-react'
 
 export default defineConfig(({ mode }) => ({
   define: {
     __APP_VERSION__: JSON.stringify(pkg.version),
   },
-  plugins: [
-    reactRefresh(),
-    requireTransfrom({
-      fileRegex: /.js$|.vue$/,
-    })
-  ],
+  plugins: [react()],
   css: {
     preprocessorOptions: {
       less: {
