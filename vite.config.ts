@@ -7,7 +7,9 @@ export default defineConfig(({ mode }) => ({
   define: {
     __APP_VERSION__: JSON.stringify(pkg.version),
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+  ],
   css: {
     preprocessorOptions: {
       less: {

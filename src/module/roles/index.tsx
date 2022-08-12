@@ -14,6 +14,11 @@ let rtc: RtcItem = {
   client: null
 }; 
 
+const APP_ID = "16cca950aca74708a9c3f1e2b7f2e655";
+const APP_CERTIFICATE = "5e9a25fcf32d401381fe53c6974051c3";
+const CHANNEL_NAME = "rte2022";
+
+
 export default function Roles(props: any) {
   const [roles, setRoles] = useState([
     {
@@ -84,9 +89,9 @@ export default function Roles(props: any) {
       });
     });
 
-    const itemClick = async (options: any, role: any) => {
+    const itemClick = async (options: any) => {
       const rs = roles.map(r => {
-        if (r.uid === role.uid) {
+        if (r.uid === options.uid) {
           return {
             ...r,
             choosed: true
@@ -117,8 +122,8 @@ export default function Roles(props: any) {
           },
         }
       );
-
-      rtc.client && await rtc.client.join(options.appId, options.channel, options.token, options.uid);
+      console.log("join option ====== ", options)
+      rtc.client && await rtc.client.join(APP_ID, CHANNEL_NAME, options.token, options.uid);
       rtc.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
       rtc.client && await rtc.client.publish([rtc.localAudioTrack]);  
       console.log("publish success!");
@@ -133,28 +138,24 @@ export default function Roles(props: any) {
     }
 
     roles.forEach(role => {
-
       // 添加RTC
       let options = {
-        appId: "16cca950aca74708a9c3f1e2b7f2e655",
-        channel: "rte2022",
         token: "",
-        // token: "00616cca950aca74708a9c3f1e2b7f2e655IADq7BLcXqQRNHs5CIGsoUpVFy+6ApSYoCpDY8zNsdeuJN15FHwAAAAAEABUJOp9ENPrYgEAAQAQ0+ti",
         uid: role.uid
       };
       options.token = RtcTokenBuilder.buildTokenWithUid(
-        options.appId, // appID
-        "5e9a25fcf32d401381fe53c6974051c3", // appCertificate
-        "rte2022", // channelName
+        APP_ID, // appID
+        APP_CERTIFICATE, // appCertificate
+        CHANNEL_NAME, // channelName
         role.uid,  // uid
         Role.PUBLISHER, // role
         Math.floor(Date.now() / 1000) + 3600 // privilegeExpiredTs
       );
-      console.log("options.token  ======= ", options.token )
+
       items.push(
         <div key={role.uid} className={`role-item ${role.choosed ? 'role-item-choosed' : 'role-item-not-choosed'}`}
           style={{ backgroundImage: "url('" + role.image + "')"}}
-          onClick={() => itemClick(options, role)}>
+          onClick={() => itemClick(options)}>
         </div>
       );
     })

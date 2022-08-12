@@ -22,12 +22,12 @@ var accessToken = function (appID, appCertificate, channelName, uid) {
   } else {
       this.uid = `${uid}`;
   }
-
+  console.log("uid ======= ", uid)
   this.build = function () {
     var m = Message({
-      salt: token.salt
-      , ts: token.ts
-      , messages: token.messages
+      salt: token.salt, 
+      ts: token.ts, 
+      messages: token.messages
     }).pack();
 
     var toSign = Buffer.concat(
