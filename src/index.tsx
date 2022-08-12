@@ -54,15 +54,15 @@ function App() {
   }));
 
   const [show, setShow] = useState(false);
-  const showWindow = useCallback((s: boolean) => {
-    setShow(s);
-  }, []);
+  const toggleWindow = useCallback(() => {
+    setShow(!show);
+  }, [show]);
 
   return (
     <div className="app">
       <Fastboard app={app} />
       <Roles />
-      <Toolbar showWindow={showWindow} />
+      <Toolbar toggleWindow={toggleWindow} />
       <Window show={show}/>
     </div>
   );
