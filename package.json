@@ -32,6 +32,7 @@
     "@netless/fastboard": "^0.3.3",
     "@netless/fastboard-react": "^0.3.6",
     "@netless/window-manager": "^0.4.30",
+    "@types/node": "^18.7.2",
     "@types/pdfjs-dist": "^2.10.378",
     "@types/react": "18",
     "@types/react-dom": "18",

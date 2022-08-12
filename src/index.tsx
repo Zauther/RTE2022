@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import ReactDOM from "react-dom";
 import { useFastboard, Fastboard, register, apps } from "@netless/fastboard-react";
 import Slide from "@netless/app-slide";
@@ -7,7 +7,8 @@ import { get_uid } from "./utils/common";
 import './index.less';
 
 import Roles from "./module/roles";
-
+import Toolbar from "./module/toolbar";
+import Window from "./module/window";
 
 function App() {
   register({
@@ -51,12 +52,18 @@ function App() {
       roomToken: "NETLESSROOM_YWs9VWtNUk92M1JIN2I2Z284dCZleHBpcmVBdD0xNjYxMjcyNTk5MDU3Jm5vbmNlPWNhODdmODEwLTBiNmUtMTFlZC04OWQxLTNmZjQ1Mzc3YzYxNyZyb2xlPTEmc2lnPTM0YzkzNzRlMzVjNWI2YzBiZGViMzA3M2JhMTRjNGM1YzY5MzNmMWZjOTI0MzM3ZWEyZTE2ZWMzMzQ3YTE2YmYmdXVpZD1jYTYwNzJlMDBiNmUxMWVkOGY3M2MzYWMzYmNjZTU0Ng"
     },
   }));
-  
+
+  const [show, setShow] = useState(false);
+  const showWindow = useCallback((s: boolean) => {
+    setShow(s);
+  }, []);
 
   return (
     <div className="app">
       <Fastboard app={app} />
       <Roles />
+      <Toolbar showWindow={showWindow} />
+      <Window show={show}/>
     </div>
   );
 }
