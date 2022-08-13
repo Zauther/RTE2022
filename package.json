@@ -32,6 +32,7 @@
     "react-pdf": "^5.7.2"
   },
   "devDependencies": {
+    "@netless/app-plyr": "^0.2.2",
     "@netless/fastboard": "^0.3.3",
     "@netless/fastboard-react": "^0.3.6",
     "@netless/window-manager": "^0.4.30",

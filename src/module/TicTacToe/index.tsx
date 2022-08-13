@@ -20,6 +20,17 @@ const TicTacToe: NetlessApp = {
 
     box.mountStyles(styles);
 
+
+
+    
+    console.log(`== context ==${ JSON.stringify(context.getIsWritable())}`);
+
+    context.dispatchMagixEvent("event","payload");
+    context.addMagixEventListener("event",(ss)=>{
+      console.log(`== addMagixEventListener ==${ JSON.stringify(ss)}`);
+    });
+
+
     const $content = document.createElement("div");
     $content.className = "tic-tac-toe";
     box.mountContent($content);

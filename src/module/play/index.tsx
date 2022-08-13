@@ -3,6 +3,8 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./play";
 
+
+
 const Play: NetlessApp = {
   config: {
     minwidth: 0.5,
@@ -11,9 +13,12 @@ const Play: NetlessApp = {
     height: 0.5,
   
   },
-  kind: "TicTacToe",
+  kind: "Play",
   setup(context) {
     const box = context.getBox();
+
+
+
     // @todo
     box._fixRatio$.setValue(true);
     const $content = document.createElement("div");

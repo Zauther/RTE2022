@@ -115,39 +115,53 @@ export function App({ context }: AppProps) {
   //   }
   // }, [members]);
 
+
+  console.log(`== context ==${ JSON.stringify(context.getIsWritable())}`);
+
+  context.addMagixEventListener("event",(ss)=>{
+    console.log(`== addMagixEventListener ==${ JSON.stringify(ss)}`);
+  });
+
+  const handleClick = () => {
+    context.dispatchMagixEvent("event","payload");
+  };
+
   return (
-    <div className="tic-tac-toe">
-      <Board
-        board={syncState.board}
-        readonly={readonly}
-        onClick={(row, col) => {
-          if (!readonly) {
-            const newBoard: SyncState["board"] = JSON.parse(
-              JSON.stringify(syncState.board)
-            );
-            newBoard[row][col] = syncState.turn;
-            setSyncState({
-              board: newBoard,
-              turn: syncState.turn === "x" ? "o" : "x",
-            });
-          }
-        }}
-      />
-      {isShowLogin && (
-        <Login
-          onLogin={() => {
-            if (!syncState.oPlayer) {
-              setSyncState({ oPlayer: memberID });
-            } else if (!syncState.xPlayer) {
-              setSyncState({ xPlayer: memberID });
-            }
-          }}
-        />
-      )}
-      {isShowWaiting && <Waiting />}
-      {(winner !== null || loser !== null) && (
-        <Winner loser={loser} memberID={memberID} winner={winner} />
-      )}
+    // <div className="tic-tac-toe">
+    //   <Board
+    //     board={syncState.board}
+    //     readonly={readonly}
+    //     onClick={(row, col) => {
+    //       if (!readonly) {
+    //         const newBoard: SyncState["board"] = JSON.parse(
+    //           JSON.stringify(syncState.board)
+    //         );
+    //         newBoard[row][col] = syncState.turn;
+    //         setSyncState({
+    //           board: newBoard,
+    //           turn: syncState.turn === "x" ? "o" : "x",
+    //         });
+    //       }
+    //     }}
+    //   />
+    //   {isShowLogin && (
+    //     <Login
+    //       onLogin={() => {
+    //         if (!syncState.oPlayer) {
+    //           setSyncState({ oPlayer: memberID });
+    //         } else if (!syncState.xPlayer) {
+    //           setSyncState({ xPlayer: memberID });
+    //         }
+    //       }}
+    //     />
+    //   )}
+    //   {isShowWaiting && <Waiting />}
+    //   {(winner !== null || loser !== null) && (
+    //     <Winner loser={loser} memberID={memberID} winner={winner} />
+    //   )}
+    // </div>
+    <div>
+      <button onClick={handleClick}>tt</button>
     </div>
   );
 }

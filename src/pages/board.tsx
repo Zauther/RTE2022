@@ -3,7 +3,7 @@ import React from "react";
 import { get_uid } from "../utils/common";
 // import './index.less';
 
-import { getRoomTokenOne } from "../utils/NetApi";
+// import { getRoomTokenOne } from "../utils/NetApi";
 
 export default function Board(props: any) {
 
