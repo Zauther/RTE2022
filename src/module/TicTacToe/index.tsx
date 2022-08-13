@@ -22,9 +22,10 @@ const TicTacToe: NetlessApp = {
 
 
 
-    
-    console.log(`== context ==${ JSON.stringify(context.getIsWritable())}`);
+    // 获取当前用户id
+    console.log(`== context ==${ JSON.stringify(context.getRoom()?.uid)}`);
 
+    
     context.dispatchMagixEvent("event","payload");
     context.addMagixEventListener("event",(ss)=>{
       console.log(`== addMagixEventListener ==${ JSON.stringify(ss)}`);

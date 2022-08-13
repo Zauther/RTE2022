@@ -9,7 +9,8 @@ import Roles from "./module/roles";
 import Toolbar from "./module/toolbar";
 import Window from "./module/window";
 
-import { getRoomsInfo,newRoom } from "./utils/NetApi";
+import { newRoom } from "./utils/NetApi";
+
 
 
 
