@@ -1,6 +1,7 @@
 import type { NetlessApp } from "@netless/window-manager";
 
-import React from "react";
+
+import React, { useCallback, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./components/App";
 import styles from "./style.css?inline";
@@ -20,16 +21,6 @@ const TicTacToe: NetlessApp = {
 
     box.mountStyles(styles);
 
-
-
-    // 获取当前用户id
-    console.log(`== context ==${ JSON.stringify(context.getRoom()?.uid)}`);
-
-    
-    context.dispatchMagixEvent("event","payload");
-    context.addMagixEventListener("event",(ss)=>{
-      console.log(`== addMagixEventListener ==${ JSON.stringify(ss)}`);
-    });
 
 
     const $content = document.createElement("div");

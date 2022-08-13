@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import type { AppContext } from "@netless/window-manager";
 import {
   MemberIDType,
@@ -116,14 +116,28 @@ export function App({ context }: AppProps) {
   // }, [members]);
 
 
-  console.log(`== context ==${ JSON.stringify(context.getIsWritable())}`);
+  const [text, setText] = useState("false");
+  // const toggleWindow = useCallback(() => {
+  //   setText(text);
+  // }, [text]);
 
-  context.addMagixEventListener("event",(ss)=>{
+  // 获取当前用户id
+  console.log(`== context ==${ JSON.stringify(context.getRoom()?.uid)}`);
+
+  
+
+  context.addMagixEventListener("event",(ss:{})=>{
     console.log(`== addMagixEventListener ==${ JSON.stringify(ss)}`);
-  });
+    if(ss.sendID!=context.getRoom()?.uid){
+      setText(ss.msg+"from"+ss.sendID);
+    }
+  })
 
   const handleClick = () => {
-    context.dispatchMagixEvent("event","payload");
+    context.dispatchMagixEvent("event",{
+      "sendID":context.getRoom()?.uid,
+      "msg":"nihao" 
+  });
   };
 
   return (
@@ -162,6 +176,7 @@ export function App({ context }: AppProps) {
     // </div>
     <div>
       <button onClick={handleClick}>tt</button>
+      <p>{text}</p>
     </div>
   );
 }
