@@ -23,9 +23,12 @@
     "@netless/app-slide": "^0.2.5",
     "@react-pdf-viewer/core": "^3.6.0",
     "@react-pdf-viewer/default-layout": "^3.6.0",
+    "axios": "^0.27.2",
     "crc-32": "^1.2.2",
     "cuint": "^0.2.2",
     "pdfjs-dist": "^2.14.305",
+    "prop-types": "^15.8.1",
+    "react-axios": "^2.0.6",
     "react-pdf": "^5.7.2"
   },
   "devDependencies": {

@@ -9,6 +9,7 @@ const Play: NetlessApp = {
     minheight: 1,
     width: (9 / 16) * 0.5,
     height: 0.5,
+  
   },
   kind: "TicTacToe",
   setup(context) {
