@@ -34,7 +34,7 @@ role:string="admin|writer|reader"
 export function newRoom(role: string) {
     return new Promise<Room>((reslove, reject) => {
         getSDKToken(role).then((sdkToken) => {
-            getRoomsInfo(sdkToken).then((roomInfo) => {
+            createRoom(sdkToken).then((roomInfo) => {
                 const uuid = roomInfo.uuid;
                 getRoomToken(uuid, sdkToken,role).then((roomToken) => {
                     reslove({ uuid: uuid, roomToken: roomToken });
@@ -61,7 +61,7 @@ export function getRoomsInfoByUUID() {
     "limit": 0
 }
 */
-function getRoomsInfo(token: string) {
+function createRoom(token: string) {
     return new Promise<RoomInfo>((reslove, reject) => {
         axiosInstance({
             method: 'post',
