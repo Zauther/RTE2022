@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     if (!/uuid/.test(window.location.search)) { // 如果没有uuid则生成一个作为房间
       newRoom(Role.Admin).then((res: any)=> {
-        window.alert(`已创建房间，可通过链接邀请玩家加入：${window.location.href + "&uuid=" + res.uuid}`);
+        window.alert(`已创建房间，可通过链接邀请玩家加入：${window.location.href + "uuid=" + res.uuid}`);
         setOptions({
           uuid: res.uuid,
           roomToken: res.roomToken

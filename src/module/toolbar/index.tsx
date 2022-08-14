@@ -25,6 +25,7 @@ export default function Toolbar(props: any) {
         id: 2,
         icon: "../../../assets/audio.png",
         showBubble: false,
+        list: plays.videos
       },
       {
         id: 3,
