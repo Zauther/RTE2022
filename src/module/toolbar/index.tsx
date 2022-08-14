@@ -4,33 +4,49 @@ import "./index.less";
 
 export default function Toolbar(props: any) {
   const { toggleWindow } = props;
+  const [items, setItems] = useState<Array<any>>([]);
+
   useEffect(() => {
     const plays = Play.getPlayInfo(1);
-    setItem(1, "list", plays.audios);
+    setItems([
+      {
+        id: 0,
+        icon: "../../../assets/play.png",
+        showBubble: false,
+      },
+      {
+        id: 1,
+        icon: "../../../assets/voice.png",
+        showBubble: false,
+        list: plays.audios
+      },
+      {
+        id: 2,
+        icon: "../../../assets/audio.png",
+        showBubble: false,
+      },
+      {
+        id: 3,
+        icon: "../../../assets/clue.png",
+        showBubble: false,
+        list: plays.clues
+      }
+    ])
   }, [])
-  const [items, setItems] = useState<Array<any>>([
-    {
-      id: 0,
-      icon: "../../../assets/play.png",
-      showBubble: false,
-    },
-    {
-      id: 1,
-      icon: "../../../assets/voice.png",
-      showBubble: false,
-    },
-    {
-      id: 2,
-      icon: "../../../assets/audio.png",
-      showBubble: false,
-    }
-  ]);
 
   const click = (itemId: number) => {
+    let its = [];
     if (!itemId) {
       toggleWindow();
+      its = items.map(item => {
+        return {
+          ...item,
+          showBubble: false
+        }
+      })
+      console.log("its ======= ", its)
     } else {
-      let its = items.map(item => {
+      its = items.map(item => {
         if (itemId === item.id) {
           return {
             ...item,
@@ -45,20 +61,6 @@ export default function Toolbar(props: any) {
       })
       setItems(its)
     }
-  }
-
-  const setItem = (id: number, key: any, value: any) => {
-    let its = items.map(item => {
-      if (id === item.id) {
-        return {
-          ...item,
-          [key]: value
-        }
-      } else {
-        return item
-      }
-    })
-    setItems(its)
   }
 
   const play = (src: string) => {
