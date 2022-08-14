@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import useMethods from "../../state/State";
 import "./index.less";
 
 export default function Toolbar(props: any) {
@@ -30,39 +31,60 @@ export default function Toolbar(props: any) {
     }
   ]);
   console.log("items ======= ", items)
-  const toggleShowBubble = useCallback((itemId: number) => {
-    let its = items.map(item => {
-      if (itemId === item.id) {
-        
-        console.log("showBubble ======= ", itemId, item.showBubble)
-        return {
-          ...item,
-          showBubble: !item.showBubble
+  // const toggleShowBubble = useCallback((itemId: number) => {
+  //   let its = items.map(item => {
+  //     if (itemId === item.id) {
+
+  //       console.log("showBubble ======= ", itemId, item.showBubble)
+  //       return {
+  //         ...item,
+  //         showBubble: !item.showBubble
+  //       }
+  //     } else {
+  //       return item
+  //     }
+  //   })
+  //   console.log("its ======= ", its)
+  //   setItems(its)
+  // }, [items]);
+
+  const { toggleShowBubble } = useMethods({
+    toggleShowBubble(itemId: number) {
+      let its = items.map(item => {
+        if (itemId === item.id) {
+
+          console.log("showBubble ======= ", itemId, item.showBubble)
+          return {
+            ...item,
+            showBubble: !item.showBubble
+          }
+        } else {
+          return item
         }
-      } else {
-        return item
-      }
-    })
-    console.log("its ======= ", its)
-    setItems(its)
-  }, [items]);
+      })
+      console.log("its ======= ", its)
+      setItems(its)
+    }
+  });
+
+
 
   return (
     <div className="toolbar">
       {
-        items.map((item, index)  => {
+        items.map((item, index) => {
           return (
             <div key={index}
-              className="toolbar-item" 
-              style={{background: `no-repeat center/60% url(${item.icon})`}}
+              className="toolbar-item"
+              style={{ background: `no-repeat center/60% url(${item.icon})` }}
               onClick={item.onClick}
-              >
+            >
               {
                 item.showBubble ? <div className="toolbar-item-bubble">
 
                 </div> : null
               }
-            </div> 
+            </div>
           )
         })
       }
