@@ -6,7 +6,6 @@ export default function Toolbar(props: any) {
   const { toggleWindow } = props;
   useEffect(() => {
     const plays = Play.getPlayInfo(1);
-    console.log(plays)
     setItem(1, "list", plays.audios);
   }, [])
   const [items, setItems] = useState<Array<any>>([
