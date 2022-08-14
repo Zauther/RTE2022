@@ -6,23 +6,28 @@ const axiosInstance = axios.create({
     headers: { 'X-Custom-Header': 'foobar' }
 });
 
-const default_lifespan = 3600 * 12;
-
 export declare interface RoomInfo {
-    uuid: string, // room 的uuid
-    teamUUID: string,
-    appUUID: string,
-    isRecord: boolean,
-    isBan: boolean,
-    createdAt: string,
-    limit: number
+  uuid: string, // room 的uuid
+  teamUUID: string,
+  appUUID: string,
+  isRecord: boolean,
+  isBan: boolean,
+  createdAt: string,
+  limit: number
 }
 
 export declare interface Room {
-    uuid: string, // room 的uuid
-    roomToken: string
+  uuid: string, // room 的uuid
+  roomToken: string
 }
 
+export const Role = {
+  Admin: "admin",
+  Writer: "writer",
+  Reader: "reader"
+}
+
+const default_lifespan = 3600 * 12;
 
 /*
 role:string="admin|writer|reader"
@@ -44,9 +49,14 @@ export function newRoom(role: string) {
     });
 }
 
-
-export function getRoomsInfoByUUID() {
-
+export function joinRoom(role: string, uuid: string) {
+  return new Promise<Room>((reslove, reject) => {
+    getSDKToken(role).then((sdkToken) => {
+      getRoomToken(uuid, sdkToken,role).then((roomToken) => {
+        reslove({ uuid: uuid, roomToken: roomToken });
+      });
+    })
+  });
 }
 
 

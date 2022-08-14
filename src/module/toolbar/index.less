@@ -3,11 +3,11 @@
   left: 16px;
   bottom: 100px;
   width: 42px;
-  height: 150px;
   z-index: 10;
   border: 1px solid #e5e8f0;
   border-radius: 4px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 
   &-item {
@@ -15,5 +15,16 @@
     width: 32px;
     padding: 5px;
     cursor: pointer;
+
+    &-bubble {
+      position: absolute;
+      right: -170px;
+      top: 50%;
+      transform: translate(0, -50%);
+      height: 100px;
+      width: 150px;
+      border: 1px solid #e5e8f0;
+      background-color: #fff;
+    }
   }
 }

@@ -20,3 +20,17 @@ function update_query(set: Record<string, string | undefined>) {
   }
   history.replaceState(null, "", "?" + query.toString());
 }
+
+export function search_parse() {
+  let resultObj: any = {};
+  let search = window.location.search;
+  if(search && search.length > 1){
+    search = search.substring(1);
+    let items = search.split('&');
+    items.forEach(item => {
+      const pair = item.split("=");
+      resultObj[pair[0]] = pair[1];
+    })
+  } 
+  return resultObj;
+}
