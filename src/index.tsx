@@ -11,15 +11,50 @@ import Board from "./module/board";
 
 import { Role, newRoom, joinRoom } from "./utils/NetApi";
 
+export default function useMethods<T extends Record<string, (...args: any[]) => any>>(methods: T) {
+  const { current } = React.useRef({
+    methods,
+    func: undefined as T | undefined,
+  });
+  current.methods = methods;
+
+  // 只初始化一次
+  if (!current.func) {
+    const func = Object.create(null);
+    Object.keys(methods).forEach((key) => {
+      // 包裹 function 转发调用最新的 methods
+      func[key] = (...args: unknown[]) => current.methods[key].call(current.methods, ...args);
+    });
+    // 返回给使用方的变量
+    current.func = func;
+  }
+
+  return current.func as T;
+}
+
+
 function App() {
   registering();
   const [show, setShow] = useState(false);
+  const {toggleWindow} = useMethods({
+    toggleWindow(){
+      setShow(!show);
+    }
+    // console.log("toggleWindow inner0======= ", show)
+    // setShow(!show);
+    // console.log("toggleWindow inner1======= ", show)
+  });
+
+  // const toggleWindow = useCallback(() => {
+  //   setShow(!show);
+  // }, [show]);
+
+
+
+  
   console.log("show ======= ", show)
   const [options, setOptions] = useState<{uuid: string, roomToken:string} | null>(null);
-  const toggleWindow = useCallback(() => {
-    console.log("toggleWindow ======= ", show)
-    setShow(!show);
-  }, [show]);
+  
 
   // 如果没有room_token则生成一个作为房间
   if (!/uuid/.test(window.location.search)) {
