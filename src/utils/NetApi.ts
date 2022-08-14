@@ -6,6 +6,22 @@ const axiosInstance = axios.create({
     headers: { 'X-Custom-Header': 'foobar' }
 });
 
+const default_lifespan = 3600 * 12;
+
+export declare interface RoomInfo {
+    uuid: string, // room 的uuid
+    teamUUID: string,
+    appUUID: string,
+    isRecord: boolean,
+    isBan: boolean,
+    createdAt: string,
+    limit: number
+}
+
+export declare interface Room {
+    uuid: string, // room 的uuid
+    roomToken: string
+}
 
 
 /*
@@ -15,22 +31,21 @@ role:string="admin|writer|reader"
     "roomToken":"NETLESSROOM_YWs9WlBKVzgtZ1luWnRvZlhVeiZleHBpcmVBdD0xNjYwMzg2MzU5MDEzJm5vbmNlPTE2NjAzODI3NTkwMTMwMCZyb2xlPTAmc2lnPWQ4MDQ0NTUyMTdhMTViNGZjNmNiMzIzOTU0MWNmYzU0NTRiOGQ1OTk0MDIzY2E0ZmI0YWQ3NGQ2M2M5MjRlNTgmdXVpZD1mMGI3OWE2MDFhZTkxMWVkOWY3ZDg1OTBiMDI1NWE2Yg"
 }
 */
-export function newRoom(role:string) {
-    return new Promise((reslove, reject) => {
+export function newRoom(role: string) {
+    return new Promise<Room>((reslove, reject) => {
         getSDKToken(role).then((sdkToken) => {
             getRoomsInfo(sdkToken).then((roomInfo) => {
                 const uuid = roomInfo.uuid;
-                getRoomToken(uuid, sdkToken).then((roomToken) => {
-                    reslove({ "uuid": uuid, "roomToken": roomToken });
+                getRoomToken(uuid, sdkToken,role).then((roomToken) => {
+                    reslove({ uuid: uuid, roomToken: roomToken });
                 });
-
             })
         })
     });
 }
 
 
-export function getRoomsInfoByUUID(){
+export function getRoomsInfoByUUID() {
 
 }
 
@@ -47,7 +62,7 @@ export function getRoomsInfoByUUID(){
 }
 */
 function getRoomsInfo(token: string) {
-    return new Promise<{}>((reslove, reject) => {
+    return new Promise<RoomInfo>((reslove, reject) => {
         axiosInstance({
             method: 'post',
             url: '/v5/rooms',
@@ -66,7 +81,7 @@ function getRoomsInfo(token: string) {
 }
 
 
-function getSDKToken(role:string) {
+function getSDKToken(role: string) {
     return new Promise<string>((reslove, reject) => {
         axiosInstance({
             method: 'post',
@@ -74,7 +89,7 @@ function getSDKToken(role:string) {
             data: {
                 "accessKey": "ZPJW8-gYnZtofXUz",
                 "secretAccessKey": "yI5N9oE7YA0sP4GUZjn__ARiFpzQD7cV",
-                "lifespan": 3600000,
+                "lifespan": default_lifespan,
                 "role": role
             },
             headers: {
@@ -87,7 +102,7 @@ function getSDKToken(role:string) {
     });
 }
 
-function getRoomToken(uuid: string, sdkToken: string) {
+function getRoomToken(uuid: string, sdkToken: string, role: string) {
 
     return new Promise<string>((reslove, reject) => {
         axiosInstance({
@@ -95,8 +110,8 @@ function getRoomToken(uuid: string, sdkToken: string) {
             url: `/v5/tokens/rooms/${uuid}`,
             data: {
                 // "accessKey": "ZPJW8-gYnZtofXUz",
-                "lifespan": 3600000,
-                "role": "admin"
+                "lifespan": default_lifespan,
+                "role": role
             },
             headers: {
                 "token": sdkToken,
