@@ -1,3 +1,4 @@
+import EventEmitter from "events";
 import React, { useEffect, useState } from "react";
 import Play from "../../service/play";
 import "./index.less";
@@ -64,7 +65,9 @@ export default function Toolbar(props: any) {
   }
 
   const play = (src: string) => {
-    
+    console.log(`src===${src}`);
+    // new EventEmitter().emit('insertMediaInner', src);
+    window?.app?.insertMedia("mic", src);
   }
 
   return (
@@ -80,7 +83,7 @@ export default function Toolbar(props: any) {
               {
                 item.list && item.showBubble ? <div className="toolbar-item-bubble">
                   {
-                    item.list.map((i:any, ind: number) => {
+                    item.list.map((i: any, ind: number) => {
                       return <div key={ind} className="toolbar-item-bubble-line" onClick={() => play(i.src)}>{i.name}</div>
                     })
                   }
