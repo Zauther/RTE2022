@@ -10,6 +10,10 @@ class Play {
         {
           name: "结尾音频",
           src: "https://cwiki.cn/downloads/%E5%B9%B4%E8%BD%AE/%E7%BB%93%E5%B0%BE%E5%BD%A9%E8%9B%8B.mp3"
+        },
+        {
+          name: "背景音乐",
+          src: "https://flat-storage.oss-accelerate.aliyuncs.com/cloud-storage/2022-03/28/f663cdcc-3367-4a15-8d2d-65fa4302c782/f663cdcc-3367-4a15-8d2d-65fa4302c782.mp3"
         }
       ],
       roles: [
@@ -122,4 +126,4 @@ class Play {
   }
 }
 
-export default Play;
+export default new Play();

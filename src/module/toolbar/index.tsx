@@ -1,73 +1,70 @@
-import React, { useCallback, useState } from "react";
-import useMethods from "../../state/State";
+import React, { useEffect, useState } from "react";
+import Play from "../../service/play";
 import "./index.less";
 
 export default function Toolbar(props: any) {
   const { toggleWindow } = props;
+  useEffect(() => {
+    const plays = Play.getPlayInfo(1);
+    console.log(plays)
+    setItem(1, "list", plays.audios);
+  }, [])
   const [items, setItems] = useState<Array<any>>([
     {
       id: 0,
       icon: "../../../assets/play.png",
       showBubble: false,
-      onClick: () => {
-        toggleWindow();
-      },
     },
     {
       id: 1,
       icon: "../../../assets/voice.png",
       showBubble: false,
-      onClick: () => {
-        toggleShowBubble(1)
-      }
     },
     {
       id: 2,
       icon: "../../../assets/audio.png",
       showBubble: false,
-      onClick: () => {
-        toggleShowBubble(2)
-      }
     }
   ]);
-  console.log("items ======= ", items)
-  // const toggleShowBubble = useCallback((itemId: number) => {
-  //   let its = items.map(item => {
-  //     if (itemId === item.id) {
 
-  //       console.log("showBubble ======= ", itemId, item.showBubble)
-  //       return {
-  //         ...item,
-  //         showBubble: !item.showBubble
-  //       }
-  //     } else {
-  //       return item
-  //     }
-  //   })
-  //   console.log("its ======= ", its)
-  //   setItems(its)
-  // }, [items]);
-
-  const { toggleShowBubble } = useMethods({
-    toggleShowBubble(itemId: number) {
+  const click = (itemId: number) => {
+    if (!itemId) {
+      toggleWindow();
+    } else {
       let its = items.map(item => {
         if (itemId === item.id) {
-
-          console.log("showBubble ======= ", itemId, item.showBubble)
           return {
             ...item,
             showBubble: !item.showBubble
           }
         } else {
-          return item
+          return {
+            ...item,
+            showBubble: false
+          }
         }
       })
-      console.log("its ======= ", its)
       setItems(its)
     }
-  });
+  }
 
+  const setItem = (id: number, key: any, value: any) => {
+    let its = items.map(item => {
+      if (id === item.id) {
+        return {
+          ...item,
+          [key]: value
+        }
+      } else {
+        return item
+      }
+    })
+    setItems(its)
+  }
 
+  const play = (src: string) => {
+    
+  }
 
   return (
     <div className="toolbar">
@@ -77,11 +74,15 @@ export default function Toolbar(props: any) {
             <div key={index}
               className="toolbar-item"
               style={{ background: `no-repeat center/60% url(${item.icon})` }}
-              onClick={item.onClick}
+              onClick={() => click(item.id)}
             >
               {
-                item.showBubble ? <div className="toolbar-item-bubble">
-
+                item.list && item.showBubble ? <div className="toolbar-item-bubble">
+                  {
+                    item.list.map((i:any, ind: number) => {
+                      return <div key={ind} className="toolbar-item-bubble-line" onClick={() => play(i.src)}>{i.name}</div>
+                    })
+                  }
                 </div> : null
               }
             </div>
