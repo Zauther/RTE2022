@@ -1,7 +1,7 @@
 
 
-export function getCurrentRoomUID() {
-    return window?.appContext?.getRoom()?.uid;
+export function getCurrentRoomUID(): string {
+    return `${window?.appContext?.getRoom()?.uid}`;
 }
 
 export class UserManager {
@@ -9,11 +9,11 @@ export class UserManager {
     currentUser: User | undefined;
     players: User[] = [];
 
-    setUser(user: User): any {
+    public setUser(user: User): any {
         if (user == undefined || user == null) {
             return;
         }
-
+        
         if (user.roomUserId = getCurrentRoomUID()) {
             this.currentUser = user;
         }
@@ -22,13 +22,15 @@ export class UserManager {
             this.admin = user;
             return;
         }
-
-
-        this.players.forEach((u) => {
-            if (user.equals(u)) {
-                u.update(user);
-            }
+        const u = this.players.find((u)=>{
+           return u.roomUserId ==user.roomUserId;
         })
+        if(u){
+            console.log(`=== 5 ===`);
+            u.update(user);
+        }else{
+            this.players.push(user);
+        }
     }
 }
 
@@ -38,13 +40,13 @@ export class User {
     userName: string | undefined;
     roomUserId: string | undefined;
     rtcUserId: string | undefined;
+
     constructor(roomUserId: string, userName: string, rtcUserId: string, isAdmin?: boolean | false) {
         this.roomUserId = roomUserId;
         this.userName = userName;
         this.rtcUserId = rtcUserId;
         this.isAdmin = isAdmin;
     }
-
 
     equals(u: User): boolean {
         if (u == undefined || u == null) {
@@ -57,6 +59,15 @@ export class User {
     update(u: User) {
         this.userName = u.userName;
         this.roomUserId = u.roomUserId;
+    }
+
+    toJson() {
+        return {
+            isAdmin: this.isAdmin,
+            userName: this.userName,
+            roomUserId: this.roomUserId,
+            rtcUserId: this.rtcUserId
+        }
     }
 
 }

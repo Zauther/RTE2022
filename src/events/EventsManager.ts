@@ -3,14 +3,20 @@ import { User, UserManager } from "../users/UserManager";
 
 /////////////// 用户信息同步 ///////////////
 export function dispatchUserInfo(user: User) {
-    window.appContext.dispatchMagixEvent("userInfoEvent", user);
+    window.appContext.dispatchMagixEvent("userInfoEvent", user.toJson());
 }
 
 export function addUserInfoListener(currentUser: User) {
-    window.appContext.addMagixEventListener("userInfoEvent", (message) => {
-        const user: User = message.payload;
-        window.userManager.setUser(user);
+    return new Promise<User>((reslove, reject) => {
+        window.appContext.addMagixEventListener("userInfoEvent", (message) => {
+            // const user: User = message.payload;
+            const user: User = new User(message.payload.roomUserId
+                , message.payload.userName, message.payload.rtcUserId, message.payload.isAdmin);
+            window.userManager?.setUser(user);
+            reslove(user);
+        });
     });
+
 }
 ////////////////////////////////////////////
 
