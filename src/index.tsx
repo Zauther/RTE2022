@@ -10,16 +10,33 @@ import Window from "./module/window";
 import Board from "./module/board";
 
 import { Role, newRoom, joinRoom } from "./utils/NetApi";
+import useMethods from "./state/State";
+
 
 function App() {
   registering();
   const [show, setShow] = useState(false);
+  const {toggleWindow} = useMethods({
+    toggleWindow(){
+      setShow(!show);
+    }
+    // console.log("toggleWindow inner0======= ", show)
+    // setShow(!show);
+    // console.log("toggleWindow inner1======= ", show)
+  });
+
+  // const toggleWindow = useCallback(() => {
+  //   console.log("toggleWindow inner0======= ", show)
+  //   setShow(!show)
+  //   console.log("toggleWindow inner1======= ", show)
+  // }, [show]);
+
+
+
+  
   console.log("show ======= ", show)
   const [options, setOptions] = useState<{uuid: string, roomToken:string} | null>(null);
-  const toggleWindow = useCallback(() => {
-    console.log("toggleWindow ======= ", show)
-    setShow(!show);
-  }, [show]);
+  
 
   // 如果没有room_token则生成一个作为房间
   if (!/uuid/.test(window.location.search)) {
