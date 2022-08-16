@@ -5,10 +5,10 @@ declare global {
     interface Window {
         appContext: AppContext;
         userManager: UserManager;
-        app: FastboardApp | null;
+        fastboardApp: FastboardApp | null;
     }
 }
 
 window.appContext = window.appContext || {};
 window.userManager = new UserManager();
-window.app = window.app || null;
+window.fastboardApp = window.fastboardApp || null;

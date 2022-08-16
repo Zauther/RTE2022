@@ -23,7 +23,7 @@ export default function Board(props: any) {
           roomToken: props.roomToken
         },
       }));
-
+      
 
     return (
       props.boardInit ? <Fastboard app={props.app} /> : null

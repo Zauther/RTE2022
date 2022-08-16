@@ -1,4 +1,4 @@
-import { User, UserManager } from "../module/users/UserManager";
+import { User, UserManager } from "../users/UserManager";
 
 
 /// dispatch基础方法
@@ -23,7 +23,6 @@ export function addUserInfoListener(currentUser: User) {
             reslove(user);
         });
     });
-
 }
 ////////////////////////////////////////////
 

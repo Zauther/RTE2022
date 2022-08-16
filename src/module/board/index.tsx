@@ -17,14 +17,13 @@ export default function Board(props: any) {
         roomToken: props.roomToken
       },
     }));
-    window.app = app;
+    window.fastboardApp = app;
     // const ee = new EventEmitter();
     // ee.on("insertMediaInner", (src) => {
     //   // app?.insertMedia()
     //   console.log(`========= ${src} ========`)
     // })
-
-
+    app?.manager.addApp({kind: "InnerInvisibleApp",})
   }
   return (
     app ? <Fastboard app={app} /> : null
