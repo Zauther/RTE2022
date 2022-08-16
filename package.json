@@ -32,7 +32,9 @@
     "pdfjs-dist": "^2.14.305",
     "prop-types": "^15.8.1",
     "react-axios": "^2.0.6",
-    "react-pdf": "^5.7.2"
+    "react-pdf": "^5.7.2",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
     "@netless/fastboard": "^0.3.3",

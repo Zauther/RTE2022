@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Fastboard, FastboardApp, useFastboard } from "@netless/fastboard-react";
 import { get_uid } from "../../utils/common";
 import EventEmitter from "events"
 
 export default function Board(props: any) {
   let app: FastboardApp | null = null;
+
   if (props.uuid && props.roomToken) {
     app = useFastboard(() => ({
       sdkConfig: {
@@ -23,8 +24,7 @@ export default function Board(props: any) {
     //   // app?.insertMedia()
     //   console.log(`========= ${src} ========`)
     // })
-
-
+   
   }
   return (
     app ? <Fastboard app={app} /> : null
