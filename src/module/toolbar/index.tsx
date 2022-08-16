@@ -2,6 +2,7 @@ import EventEmitter from "events";
 import React, { useEffect, useState } from "react";
 import Play from "../../service/play";
 import "./index.less";
+import { event } from "../../index";
 
 export default function Toolbar(props: any) {
   const { toggleWindow } = props;
@@ -17,28 +18,28 @@ export default function Toolbar(props: any) {
       },
       {
         id: 1,
+        icon: "../../../assets/clue.png",
+        showBubble: false,
+        list: plays.clues
+      },
+      {
+        id: 2,
         icon: "../../../assets/voice.png",
         showBubble: false,
         list: plays.audios
       },
       {
-        id: 2,
+        id: 3,
         icon: "../../../assets/audio.png",
         showBubble: false,
         list: plays.videos
       },
-      {
-        id: 3,
-        icon: "../../../assets/clue.png",
-        showBubble: false,
-        list: plays.clues
-      }
     ])
   }, [])
 
   const click = (itemId: number) => {
     let its = [];
-    if (!itemId) {
+    if (itemId === 0) {
       toggleWindow();
       its = items.map(item => {
         return {
@@ -65,10 +66,13 @@ export default function Toolbar(props: any) {
     }
   }
 
-  const play = (src: string) => {
-    console.log(`src===${src}`);
-    // new EventEmitter().emit('insertMediaInner', src);
-    window?.app?.insertMedia("mic", src);
+  const clickItem = (type: string, data: any) => {
+    if (type === "media") {
+      window?.app?.insertMedia("mic", data);
+    } else {
+      event.emit('setClues', data);
+      toggleWindow();
+    }
   }
 
   return (
@@ -85,7 +89,7 @@ export default function Toolbar(props: any) {
                 item.list && item.showBubble ? <div className="toolbar-item-bubble">
                   {
                     item.list.map((i: any, ind: number) => {
-                      return <div key={ind} className="toolbar-item-bubble-line" onClick={() => play(i.src)}>{i.name}</div>
+                      return <div key={ind} className="toolbar-item-bubble-line" onClick={() => clickItem(i?.src ? "media":"clue", i?.src ? i.src: i.data)}>{i.name}</div>
                     })
                   }
                 </div> : null

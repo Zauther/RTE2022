@@ -4,11 +4,14 @@ import './index.less';
 import { registering } from "./module/apps";
 import { get_uid, search_parse } from "./utils/common";
 import { Role, newRoom, joinRoom } from "./utils/NetApi";
+import { EventEmitter } from "events";
 
 import Roles from "./module/roles";
 import Toolbar from "./module/toolbar";
 import Window from "./module/window";
 import Board from "./module/board";
+
+export const event = new EventEmitter();
 
 function App() {
   registering();
