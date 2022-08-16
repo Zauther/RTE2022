@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import AgoraRTC, { IAgoraRTCClient, IMicrophoneAudioTrack } from "agora-rtc-sdk-ng";
 import "./index.less"
 import { apps } from "@netless/fastboard-react";
 import { RtcTokenBuilder, Role } from "../../utils/RtcTokenBuilder";
+import Play from "../../service/play";
 
 type RtcItem = {
   localAudioTrack: null | IMicrophoneAudioTrack;
@@ -20,6 +21,10 @@ const CHANNEL_NAME = "rte2022";
 var token= "00616cca950aca74708a9c3f1e2b7f2e655IADBbRMbi2I/3iPp7U9XUtbGxYEJttsi9JZLqP+++osd+d15FHwAAAAAEACxI7THFer4YgEAAQAq6vhi";
 
 export default function Roles(props: any) {
+  useEffect(() => {
+    const res = Play.getPlayInfo(1)
+    setRoles(res.roles as [])
+  }, [])
   const [roles, setRoles] = useState([]);
 
   const renderRoles = useCallback(() => {
@@ -47,10 +52,7 @@ export default function Roles(props: any) {
     });
 
     const itemClick = async (options: any) => {
-
-
-
-      const rs = roles.map(r => {
+      const rs = roles.map((r: any) => {
         if (r.uid === options.uid) {
           return {
             ...r,
@@ -60,28 +62,8 @@ export default function Roles(props: any) {
           return r
         }
       })
-      setRoles(rs);
+      setRoles(rs as []);
 
-      apps.push(
-        {
-          kind: "Slide",
-          label: "剧本",
-          icon: "../assets/play.png",
-          onClick: (fastboard: any) => {
-            fastboard.manager.addApp({
-              kind: "Slide",
-              options: { 
-                scenePath: `/ppt/${1234567}`,
-                title: "剧本" 
-              },
-              attributes: {
-                taskId: "1234567", // [2]
-                url: "https://cwiki.cn/downloads/%E5%B9%B4%E8%BD%AE/%E5%89%A7%E6%9C%AC/%E5%88%98%E4%BC%AF%E9%92%8A.PDF", // [3]
-              },
-            });
-          },
-        }
-      );
       console.log("join option ====== ", options)
       // rtc.client && await rtc.client.join(APP_ID, CHANNEL_NAME, options.token, options.uid);
       rtc.client && await rtc.client.join(APP_ID, CHANNEL_NAME,null,null);
@@ -98,7 +80,7 @@ export default function Roles(props: any) {
       // }
     }
 
-    roles.forEach(role => {
+    roles.forEach((role: any) => {
       // 添加RTC
       let options = {
         token: "",
@@ -107,15 +89,15 @@ export default function Roles(props: any) {
       options.token = RtcTokenBuilder.buildTokenWithUid(
         APP_ID, // appID
         APP_CERTIFICATE, // appCertificate
-        // CHANNEL_NAME, // channelName
+        CHANNEL_NAME, // channelName
         "rtc20222",
-        role.uid,  // uid
+        0,  // uid
         Role.PUBLISHER, // role
         Math.floor(Date.now() / 1000) + 3600 // privilegeExpiredTs
       );
       //  var token= "00616cca950aca74708a9c3f1e2b7f2e655IADBbRMbi2I/3iPp7U9XUtbGxYEJttsi9JZLqP+++osd+d15FHwAAAAAEACxI7THFer4YgEAAQAq6vhi";
 
-      options.token ="00616cca950aca74708a9c3f1e2b7f2e655IAAxBZOYcQ6U6WkRkwiN49OKy/FJouoBr1+e6h3wx5+/vADnkjTH48ZKIgCBlTOykf74YgQAAQAhu/diAgAhu/diAwAhu/diBAAhu/di"
+      options.token ="00616cca950aca74708a9c3f1e2b7f2e655IACiT5BFZ5x40VfaOuPY/QfsIrz8exoggXVcj9DO9cto2t15FHwAAAAAIgCLKlkRauj5YgQAAQDqMtNkAgDqMtNkAwDqMtNkBADqMtNk"
       console.log(`==token==${options.token}`);
 
       items.push(

@@ -18,9 +18,9 @@ class Play {
       ],
       videos: [
         {
-          name: "结局视频",
-          src: "https://flat-storage.oss-accelerate.aliyuncs.com/cloud-storage/2022-03/28/e35a6676-aa5d-4a61-8f17-87e626b7d1b7/e35a6676-aa5d-4a61-8f17-87e626b7d1b7.mp4"
-        },
+          name: "视频1",
+          src: ""
+        }
       ],
       roles: [
         {
