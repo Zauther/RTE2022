@@ -24,13 +24,27 @@ function update_query(set: Record<string, string | undefined>) {
 export function search_parse() {
   let resultObj: any = {};
   let search = window.location.search;
-  if(search && search.length > 1){
+  if (search && search.length > 1) {
     search = search.substring(1);
     let items = search.split('&');
     items.forEach(item => {
       const pair = item.split("=");
       resultObj[pair[0]] = pair[1];
     })
-  } 
+    }
   return resultObj;
+}
+
+type Last<T> = T extends [...any, infer Last] ? Last : never;
+
+export function search_roomId() {
+  let resultObj: any = {};
+  let search = window.location.href;
+  console.log(`search=${search}`);
+  if (search && search.length > 1) {
+    const myURL = new URL(search);
+    let items = myURL.pathname.split('/');
+    return items.pop();
+  }
+  return "";
 }
