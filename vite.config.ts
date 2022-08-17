@@ -21,13 +21,14 @@ export default defineConfig(({ mode }) => ({
       }
     }
   },
+  publicDir: "assets",
   build: {
     // lib: {
     //   entry: path.resolve(__dirname, "src/index.tsx"),
     //   formats: ["cjs", "es"],
     //   fileName: "index",
     // },
-    assetsDir: 'assets', // 指定生成静态文件目录
+    assetsDir: "assets", // 指定生成静态文件目录
     sourcemap: mode === "production",
     outDir: "dist",
     rollupOptions: {
