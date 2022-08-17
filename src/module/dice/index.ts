@@ -1,13 +1,12 @@
-import type { NetlessApp } from "@netless/window-manager";
+import type { NetlessApp, AppContext } from "@netless/window-manager";
 import { color_to_string, noop } from "./internal";
 import { createUI } from "./player";
-import "./index.less"
+import styles from "./index.css?inline";
 
 const Dice: NetlessApp = {
   kind: "Dice",
-  setup(context: any) {
+  setup(context: AppContext) {
     const disposers: Set<() => void> = new Set();
-
     const faces$$ = context.createStorage<{ value?: number[]; color?: string }>("faces");
 
     const $ui = createUI(faces$$.state.value || [1, 2, 3, 4, 5, 6]);
@@ -16,7 +15,7 @@ const Dice: NetlessApp = {
       const color = context.currentMember?.memberState.strokeColor;
       faces$$.setState({
         value: shuffle([1, 2, 3, 4, 5, 6]),
-        color: color ? color_to_string(color) : "",
+        color: color ? color_to_string(color) : "#F7BA0B",
       });
     };
 
@@ -46,8 +45,9 @@ const Dice: NetlessApp = {
 
     disposers.add(faces$$.addStateChangedListener(refreshCube));
 
-    // context.box.mountStyles(styles);
-    context.box.mountContent($ui.$container);
+    const box = context.getBox();
+    box.mountStyles(styles);
+    box.mountContent($ui.$container);
 
     context.emitter.on("destroy", () => {
       disposers.forEach(dispose => dispose());

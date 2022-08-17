@@ -1,7 +1,7 @@
 import type { NetlessApp } from "@netless/window-manager";
 
 
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./components/App";
 import styles from "./style.css?inline";
@@ -20,9 +20,6 @@ const TicTacToe: NetlessApp = {
     box._fixRatio$.setValue(true);
 
     box.mountStyles(styles);
-
-
-
     const $content = document.createElement("div");
     $content.className = "tic-tac-toe";
     box.mountContent($content);
