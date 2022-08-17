@@ -98,7 +98,7 @@ export default function Roles(props: any) {
       //  var token= "00616cca950aca74708a9c3f1e2b7f2e655IADBbRMbi2I/3iPp7U9XUtbGxYEJttsi9JZLqP+++osd+d15FHwAAAAAEACxI7THFer4YgEAAQAq6vhi";
 
       options.token ="00616cca950aca74708a9c3f1e2b7f2e655IACiT5BFZ5x40VfaOuPY/QfsIrz8exoggXVcj9DO9cto2t15FHwAAAAAIgCLKlkRauj5YgQAAQDqMtNkAgDqMtNkAwDqMtNkBADqMtNk"
-      console.log(`==token==${options.token}`);
+      // console.log(`==token==${options.token}`);
 
       items.push(
         <div key={role.uid} className={`role-item ${role.choosed ? 'role-item-choosed' : 'role-item-not-choosed'}`}

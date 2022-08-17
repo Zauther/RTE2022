@@ -27,7 +27,7 @@ class Play {
           uid: 1,
           name: "DM",
           image: 'https://p0.meituan.net/roleplay/dda93d3f9d4c5268a421370abe49f2562621818825.png',
-          play: 'https://cwiki.cn/downloads/%E5%B9%B4%E8%BD%AE/%E5%89%A7%E6%9C%AC/%E5%88%98%E4%BC%AF%E9%92%8A.PDF',
+          play: 'https://cwiki.cn/downloads/%E5%B9%B4%E8%BD%AE/%E7%BB%84%E7%BB%87%E8%80%85%E6%89%8B%E5%86%8C/%E7%BB%84%E7%BB%87%E8%80%85%E6%89%8B%E5%86%8C.PDF',
           choosed: false,
         },
         {

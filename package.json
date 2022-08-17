@@ -30,6 +30,7 @@
     "cuint": "^0.2.2",
     "events": "^3.3.0",
     "pdfjs-dist": "^2.14.305",
+    "pnpm": "^7.9.0",
     "prop-types": "^15.8.1",
     "react-axios": "^2.0.6",
     "react-pdf": "^5.7.2"
