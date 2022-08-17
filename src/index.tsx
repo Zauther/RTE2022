@@ -15,13 +15,13 @@ import { UserManager } from "./users/UserManager";
 export const event = new EventEmitter();
 
 function App() {
-  window.userManager = new UserManager();
   registering();
   const [show, setShow] = useState<boolean>(false);
   const [options, setOptions] = useState<{uuid: string, roomToken:string} | null>(null);
   const [roomId, setRoomId] = useState<string | null>(null);
 
   useEffect(() => {
+    window.userManager = new UserManager();
     if (!/uuid/.test(window.location.search)) { // 如果没有uuid则生成一个作为房间
       Room.createRoom(Role.Admin).then((res: any)=> {
         setRoomId(res.uuid);
@@ -30,6 +30,8 @@ function App() {
           roomToken: res.roomToken
         });
       });
+      window.userManager.isAdmin = true;
+      window.userManager.admin = window.userManager.currentUser;
     } else { // 如果有uuid则加入uuid对应的房间
       const search_obj = search_parse();
       const uuid = search_obj['roomId'];
