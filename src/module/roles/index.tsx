@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import AgoraRTC, { IAgoraRTCClient, IMicrophoneAudioTrack } from "agora-rtc-sdk-ng";
 import "./index.less"
-import { apps } from "@netless/fastboard-react";
 import { RtcTokenBuilder, Role } from "../../utils/RtcTokenBuilder";
 import Play from "../../service/play";
+import { RTC_TOKEN } from "../../utils/RTCUtils";
 
 type RtcItem = {
   localAudioTrack: null | IMicrophoneAudioTrack;
@@ -18,7 +18,7 @@ let rtc: RtcItem = {
 const APP_ID = "16cca950aca74708a9c3f1e2b7f2e655";
 const APP_CERTIFICATE = "3a224adcf8e24a808a6906179379221b";
 const CHANNEL_NAME = "rte2022";
-var token= "00616cca950aca74708a9c3f1e2b7f2e655IADBbRMbi2I/3iPp7U9XUtbGxYEJttsi9JZLqP+++osd+d15FHwAAAAAEACxI7THFer4YgEAAQAq6vhi";
+// var token= "00616cca950aca74708a9c3f1e2b7f2e655IADBbRMbi2I/3iPp7U9XUtbGxYEJttsi9JZLqP+++osd+d15FHwAAAAAEACxI7THFer4YgEAAQAq6vhi";
 
 export default function Roles(props: any) {
   useEffect(() => {
@@ -91,14 +91,12 @@ export default function Roles(props: any) {
         APP_CERTIFICATE, // appCertificate
         CHANNEL_NAME, // channelName
         "rtc20222",
-        0,  // uid
+        role.uid,  // uid
         Role.PUBLISHER, // role
         Math.floor(Date.now() / 1000) + 3600 // privilegeExpiredTs
       );
-      //  var token= "00616cca950aca74708a9c3f1e2b7f2e655IADBbRMbi2I/3iPp7U9XUtbGxYEJttsi9JZLqP+++osd+d15FHwAAAAAEACxI7THFer4YgEAAQAq6vhi";
-
-      options.token ="00616cca950aca74708a9c3f1e2b7f2e655IACiT5BFZ5x40VfaOuPY/QfsIrz8exoggXVcj9DO9cto2t15FHwAAAAAIgCLKlkRauj5YgQAAQDqMtNkAgDqMtNkAwDqMtNkBADqMtNk"
-      // console.log(`==token==${options.token}`);
+      // options.token = RTC_TOKEN;
+      console.log("buildTokenWithUid token: ", options.token);
 
       items.push(
         <div key={role.uid} className={`role-item ${role.choosed ? 'role-item-choosed' : 'role-item-not-choosed'}`}
