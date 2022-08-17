@@ -1,5 +1,6 @@
 import { apps, register } from "@netless/fastboard";
 import Dice from "./dice";
+import DiceIcon from "../../assets/dice.png"
 // import Plyr from "@netless/app-plyr"
 // import TicTacToe from "./TicTacToe";
 
@@ -19,7 +20,7 @@ export const registering = () => {
         {
             kind: "Dice",
             label: "骰子",
-            icon: "../assets/dice.png",
+            icon: DiceIcon,
             onClick: (fastboard: any) => {
                 fastboard.manager.addApp({
                     src: Dice,

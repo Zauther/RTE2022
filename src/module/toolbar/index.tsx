@@ -3,6 +3,13 @@ import Play from "../../service/play";
 import { TYPES } from "../window";
 import { event } from "../../index";
 import clipboard from "clipboard-js";
+
+import RoomIcon from "../../../assets/room.png";
+import PlayIcon from "../../../assets/play.png";
+import ClueIcon from "../../../assets/clue.png";
+import AudioIcon from "../../../assets/audio.png";
+import VoiceIcon from "../../../assets/voice.png";
+
 import "./index.less";
 
 export default function Toolbar(props: any) {
@@ -21,7 +28,7 @@ export default function Toolbar(props: any) {
     setItems([
       {
         id: 0,
-        icon: "../../../public/room.png",
+        icon: RoomIcon,
         showBubble: false,
         list: [
           {
@@ -32,24 +39,24 @@ export default function Toolbar(props: any) {
       },
       {
         id: 1,
-        icon: "../../../public/play.png",
+        icon: PlayIcon,
         showBubble: false,
       },
       {
         id: 2,
-        icon: "../../../public/clue.png",
+        icon: ClueIcon,
         showBubble: false,
         list: plays.clues
       },
       {
         id: 3,
-        icon: "../../../public/voice.png",
+        icon: VoiceIcon,
         showBubble: false,
         list: plays.audios
       },
       {
         id: 4,
-        icon: "../../../public/audio.png",
+        icon: AudioIcon,
         showBubble: false,
         list: plays.videos
       },
