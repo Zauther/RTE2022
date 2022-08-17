@@ -35,6 +35,9 @@
     "pnpm": "^7.9.0",
     "prop-types": "^15.8.1",
     "react-axios": "^2.0.6",
+    "white-web-sdk": "^2.16.24",
+    "@netless/synced-store":"^2.0.6",
+    "@react-pdf-viewer/toolbar":"^3.6.0",
     "react-pdf": "^5.7.2"
   },
   "devDependencies": {

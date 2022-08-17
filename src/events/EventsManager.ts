@@ -1,29 +1,31 @@
-import { User, UserManager } from "../module/users/UserManager";
+import { User, UserManager } from "../users/UserManager";
 
 
 /// dispatch基础方法
 export function dispatch(event: string, playloads: {}) {
-    window.appContext.dispatchMagixEvent(event, playloads);
+    window.room.dispatchMagixEvent(event, playloads);
 }
 
 
 /////////////// 用户信息同步 ///////////////
 export function dispatchUserInfo(user: User) {
-    dispatch("userInfoEvent", user.toJson());
+    console.log(`====dispatchUserInfo===${JSON.stringify(user)}`)
+    window.room.dispatchMagixEvent("userInfoEvent", user.toJson());
 }
 
-export function addUserInfoListener(currentUser: User) {
+export function addUserInfoListener() {
     return new Promise<User>((reslove, reject) => {
-        window.appContext.addMagixEventListener("userInfoEvent", (message) => {
+        window.room.addMagixEventListener("userInfoEvent", (message) => {
+            
             // const user: User = message.payload;
             const user: User = new User(message.payload.roomUserId
                 , message.payload.userName, message.payload.rtcUserId, message.payload.isAdmin);
-            console.log(`=======${JSON.stringify(user)}`)
+            
             window.userManager.setUser(user);
+            console.log(`====addUserInfoListener===${JSON.stringify(window.userManager)}`)
             reslove(user);
         });
     });
-
 }
 ////////////////////////////////////////////
 
@@ -68,7 +70,7 @@ export function dispatchClues(clueEvent: ClueEvent) {
 
 export function addCluesListener(currentUser: User | undefined) {
     return new Promise<ClueEvent>((reslove, reject) => {
-        window.appContext.addMagixEventListener("clueEvent", (message) => {
+        window.room.addMagixEventListener("clueEvent", (message) => {
             const clueEvent: ClueEvent = message.payload;
             if (clueEvent.roomUserId == window.appContext.getRoom()?.uid) {
                 reslove(clueEvent);

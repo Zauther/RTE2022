@@ -10,10 +10,12 @@ import Roles from "./module/roles";
 import Toolbar from "./module/toolbar";
 import Window from "./module/window";
 import Board from "./module/board";
+import { UserManager } from "./users/UserManager";
 
 export const event = new EventEmitter();
 
 function App() {
+  window.userManager = new UserManager();
   registering();
   const [show, setShow] = useState<boolean>(false);
   const [options, setOptions] = useState<{uuid: string, roomToken:string} | null>(null);

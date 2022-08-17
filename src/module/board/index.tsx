@@ -1,7 +1,8 @@
 import React from "react";
-import { Fastboard, FastboardApp, useFastboard } from "@netless/fastboard-react";
+import { Fastboard, FastboardApp } from "@netless/fastboard-react";
 import { get_uid } from "../../utils/common";
 import "./index.less";
+import { useFastboard } from "./fastboardutils";
 
 export default function Board(props: any) {
   let app: FastboardApp | null = null;
@@ -18,7 +19,7 @@ export default function Board(props: any) {
         roomToken: props.roomToken
       },
     }));
-    window.app = app;
+    window.fastboardApp = app;
   }
 
   return (
