@@ -11,20 +11,18 @@ export class UserManager {
         if (user == undefined || user == null) {
             return;
         }
-
-        if (user.roomUserId = getCurrentRoomUID()) {
+        if (user.roomUserId == getCurrentRoomUID()) {
             this.currentUser = user;
         }
-
         if (user.isAdmin) {
             this.admin = user;
             return;
         }
+
         const u = this.players.find((u) => {
             return u.roomUserId == user.roomUserId;
         })
-        if (u) {
-            console.log(`=== 5 ===`);
+        if (u != undefined) {
             u.update(user);
         } else {
             this.players.push(user);

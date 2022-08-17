@@ -2,19 +2,8 @@ import { apps, register } from "@netless/fastboard";
 import Play from "./play";
 import Plyr from "@netless/app-plyr"
 import TicTacToe from "./TicTacToe";
-import InnerInvisibleApp from "./invisible/InvisibleApp";
 
 export const registering = () => {
-
-    register({
-        kind: "InnerInvisibleApp",
-        appOptions: {
-            // 打开这个选项显示 debug 工具栏
-            debug: false,
-        },
-        src: InnerInvisibleApp,
-    });
-
     register({
         kind: "Play",
         appOptions: {
