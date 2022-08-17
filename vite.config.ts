@@ -27,6 +27,7 @@ export default defineConfig(({ mode }) => ({
     //   formats: ["cjs", "es"],
     //   fileName: "index",
     // },
+    assetsDir: 'assets', // 指定生成静态文件目录
     sourcemap: mode === "production",
     outDir: "dist",
     rollupOptions: {

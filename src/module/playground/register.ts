@@ -1,7 +1,6 @@
 import { register, apps } from "@netless/fastboard";
-import App from "../tictactoe/index";
+import App from "../tic-tac-toe/index";
 import Slide from "@netless/app-slide";
-import logo from "../src/logo.svg";
 
 export const registering = () => {
   register({ kind: App.kind, src: App });

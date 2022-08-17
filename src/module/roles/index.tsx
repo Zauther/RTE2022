@@ -66,7 +66,7 @@ export default function Roles(props: any) {
 
       console.log("join option ====== ", options)
       // rtc.client && await rtc.client.join(APP_ID, CHANNEL_NAME, options.token, options.uid);
-      rtc.client && await rtc.client.join(APP_ID, CHANNEL_NAME,null,null);
+      rtc.client && await rtc.client.join(APP_ID, CHANNEL_NAME, options.token, options.uid);
       rtc.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
       rtc.client && await rtc.client.publish([rtc.localAudioTrack]);  
       console.log("publish success!");
