@@ -94,10 +94,10 @@ export async function createFastboard<TEventData = any>({
 
   addUserInfoListener();
 
+  const currentUser = new User(window.room.uid as string, "", "", window.userManager.isAdmin);
+  window.userManager.currentUser = currentUser;
+  window.userManager.setUser(currentUser);
   if (!window?.userManager?.isAdmin) {
-    const currentUser = new User(window.room.uid as string, "", "", false);
-    window.userManager.currentUser = currentUser;
-    window.userManager.setUser(currentUser);
     dispatchUserInfo(currentUser);
   }
 
