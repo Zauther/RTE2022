@@ -21,7 +21,7 @@ export default function Toolbar(props: any) {
     setItems([
       {
         id: 0,
-        icon: "../../../assets/room.png",
+        icon: "../../../public/room.png",
         showBubble: false,
         list: [
           {
@@ -32,24 +32,24 @@ export default function Toolbar(props: any) {
       },
       {
         id: 1,
-        icon: "../../../assets/play.png",
+        icon: "../../../public/play.png",
         showBubble: false,
       },
       {
         id: 2,
-        icon: "../../../assets/clue.png",
+        icon: "../../../public/clue.png",
         showBubble: false,
         list: plays.clues
       },
       {
         id: 3,
-        icon: "../../../assets/voice.png",
+        icon: "../../../public/voice.png",
         showBubble: false,
         list: plays.audios
       },
       {
         id: 4,
-        icon: "../../../assets/audio.png",
+        icon: "../../../public/audio.png",
         showBubble: false,
         list: plays.videos
       },
