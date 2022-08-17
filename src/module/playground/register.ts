@@ -1,5 +1,5 @@
 import { register, apps } from "@netless/fastboard";
-import App from "../TicTacToe/index";
+import App from "../tictactoe/index";
 import Slide from "@netless/app-slide";
 import logo from "../src/logo.svg";
 

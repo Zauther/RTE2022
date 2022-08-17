@@ -17,11 +17,12 @@ function App() {
   registering();
   const [show, setShow] = useState<boolean>(false);
   const [options, setOptions] = useState<{uuid: string, roomToken:string} | null>(null);
+  const [roomId, setRoomId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!/uuid/.test(window.location.search)) { // 如果没有uuid则生成一个作为房间
       Room.createRoom(Role.Admin).then((res: any)=> {
-        // window.alert(`已创建房间，可通过链接邀请玩家加入：${window.location.href + "uuid=" + res.uuid}`);
+        setRoomId(res.uuid);
         setOptions({
           uuid: res.uuid,
           roomToken: res.roomToken
@@ -29,7 +30,7 @@ function App() {
       });
     } else { // 如果有uuid则加入uuid对应的房间
       const search_obj = search_parse();
-      const uuid = search_obj['uuid'];
+      const uuid = search_obj['roomId'];
       Room.joinRoom(Role.Writer, uuid).then((res: any) => {
         setOptions({
           uuid: res.uuid,
@@ -43,7 +44,7 @@ function App() {
     <div className="app">
       <Board uuid={options?.uuid} roomToken={options?.roomToken} />
       <Roles />
-      <Toolbar setShowWindow={(show: boolean) => setShow(show)} />
+      <Toolbar setShowWindow={(show: boolean) => setShow(show)} roomId={roomId} />
       <Window show={show} />
     </div>
   );

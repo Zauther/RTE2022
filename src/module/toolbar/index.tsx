@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import Play from "../../service/play";
 import { TYPES } from "../window";
 import { event } from "../../index";
+import clipboard from "clipboard-js";
 import "./index.less";
 
 export default function Toolbar(props: any) {
-  const { setShowWindow } = props;
+  const { setShowWindow, roomId } = props;
   const [items, setItems] = useState<Array<any>>([]);
   const [plays, setPlays] = useState<any>(null);
   const [innerShowWindow, setInnerShowWindow] = useState<any>({
@@ -20,23 +21,34 @@ export default function Toolbar(props: any) {
     setItems([
       {
         id: 0,
+        icon: "../../../assets/room.png",
+        showBubble: false,
+        list: [
+          {
+            id: 0,
+            name: "复制加入房间链接"
+          }
+        ]
+      },
+      {
+        id: 1,
         icon: "../../../assets/play.png",
         showBubble: false,
       },
       {
-        id: 1,
+        id: 2,
         icon: "../../../assets/clue.png",
         showBubble: false,
         list: plays.clues
       },
       {
-        id: 2,
+        id: 3,
         icon: "../../../assets/voice.png",
         showBubble: false,
         list: plays.audios
       },
       {
-        id: 3,
+        id: 4,
         icon: "../../../assets/audio.png",
         showBubble: false,
         list: plays.videos
@@ -46,7 +58,7 @@ export default function Toolbar(props: any) {
 
   const click = (itemId: number) => {
     let its = [];
-    if (itemId === 0) {
+    if (itemId === 1) {
       event.emit('window', {
         type: TYPES.PLAY,
         data: plays.roles[0].play,
@@ -102,22 +114,26 @@ export default function Toolbar(props: any) {
         type: TYPES.CLUE,
         data: data?.data || [],
       });
-      if (innerShowWindow.id === 1 && data.name === innerShowWindow.name) {
+      if (innerShowWindow.id === 2 && data.name === innerShowWindow.name) {
         setShowWindow(!innerShowWindow.show);
         setInnerShowWindow({
           show: !innerShowWindow.show,
           name: data.name,
-          id: 1
+          id: 2
         });
       } else {
         setShowWindow(true);
         setInnerShowWindow({
           show: true,
           name: data.name,
-          id: 1
+          id: 2
         });
       }
     }
+  }
+
+  const copyRoomLink = () => {
+    clipboard.copy(`${window.location.href}&roomId=${roomId}`)
   }
 
   return (
@@ -136,7 +152,7 @@ export default function Toolbar(props: any) {
                     item.list.map((i: any, ind: number) => {
                       return (
                         <div key={ind} className="toolbar-item-bubble-line" 
-                          onClick={(e) => clickItem(e, i?.src ? "media":"clue", i)}>
+                          onClick={(e) => item.id === 0 ? copyRoomLink() : clickItem(e, i?.src ? "media":"clue", i)}>
                           {i.name}
                         </div>)
                     })

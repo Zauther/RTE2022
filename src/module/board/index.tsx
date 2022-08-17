@@ -1,6 +1,7 @@
 import React from "react";
 import { Fastboard, FastboardApp, useFastboard } from "@netless/fastboard-react";
 import { get_uid } from "../../utils/common";
+import "./index.less";
 
 export default function Board(props: any) {
   let app: FastboardApp | null = null;
@@ -21,6 +22,6 @@ export default function Board(props: any) {
   }
 
   return (
-    app ? <Fastboard app={app} /> : null
+    app ? <div className="board"><Fastboard app={app} /></div> : null
   );
 }
