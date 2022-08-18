@@ -12,8 +12,12 @@ class Play {
           src: "https://cwiki.cn/downloads/%E5%B9%B4%E8%BD%AE/%E7%BB%93%E5%B0%BE%E5%BD%A9%E8%9B%8B.mp3"
         },
         {
-          name: "背景音乐",
+          name: "背景音乐1",
           src: "https://flat-storage.oss-accelerate.aliyuncs.com/cloud-storage/2022-03/28/f663cdcc-3367-4a15-8d2d-65fa4302c782/f663cdcc-3367-4a15-8d2d-65fa4302c782.mp3"
+        },
+        {
+          name: "背景音乐2",
+          src: "http://freetyst.nf.migu.cn/public/product5th/product35/2019/10/0916/2018%E5%B9%B412%E6%9C%8814%E6%97%A511%E7%82%B922%E5%88%86%E5%86%85%E5%AE%B9%E5%87%86%E5%85%A5%E7%A6%BE%E4%BF%A1%E9%A2%84%E7%95%99902%E9%A6%96/%E6%A0%87%E6%B8%85%E9%AB%98%E6%B8%85/MP3_128_16_Stero/69910478206.mp3?channelid=02&msisdn=f4dbbec4-ac43-42b9-995c-40c07d90911b&Tim=1660794550482&Key=8a180cdd79beb4f7"
         }
       ],
       videos: [

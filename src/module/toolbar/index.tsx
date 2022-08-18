@@ -115,7 +115,7 @@ export default function Toolbar(props: any) {
     e.stopPropagation();
     
     if (type === "media") {
-      window?.app?.insertMedia("mic", data.src);
+      window?.fastboardApp?.insertMedia("mic", data.src);
     } else {
       event.emit('window', {
         type: TYPES.CLUE,
