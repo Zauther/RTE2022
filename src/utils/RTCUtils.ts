@@ -1,33 +1,32 @@
 import AgoraRTC, { IAgoraRTCClient, IAgoraRTCRemoteUser, IMicrophoneAudioTrack, UID } from "agora-rtc-sdk-ng";
-
+import axios from 'axios';
 
 
 /*
  * 使用姿势
-
  */
-// 一年有效token
-// 00616cca950aca74708a9c3f1e2b7f2e655IACiT5BFZ5x40VfaOuPY/QfsIrz8exoggXVcj9DO9cto2t15FHwAAAAAIgCLKlkRauj5YgQAAQDqMtNkAgDqMtNkAwDqMtNkBADqMtNk
+/*
 
-// const client = getRtcClient();
-//     const option: Options = {
-//         appid: "16cca950aca74708a9c3f1e2b7f2e655",
-//         channel: "rte2022",
-//         uid: "0",
-//         token: "00616cca950aca74708a9c3f1e2b7f2e655IADoC/hZXCMWpUeaWKarZWI6K0gxQc4GQGFuYz4Nl7YdP915FHwAAAAAIgA6Jek7Gtz5YgQAAQCqmPhiAgCqmPhiAwCqmPhiBACqmPhi"
-//     }
-//     join(client, option).then((info) => {
-//         console.log(`===client ===${JSON.stringify(info)}`);
-//     });
+const client = getRtcClient();
+    const option: Options = {
+        appid: "16cca950aca74708a9c3f1e2b7f2e655",
+        channel: "rte2022",
+        uid: "0",
+    }
+    join(client, option).then((info) => {
+        console.log(`===client ===${JSON.stringify(info)}`);
+    });
+
+*/
 
 // 一年有效期，起始时间：20220814 14:30
-export const RTC_TOKEN = "00616cca950aca74708a9c3f1e2b7f2e655IACiT5BFZ5x40VfaOuPY/QfsIrz8exoggXVcj9DO9cto2t15FHwAAAAAIgCLKlkRauj5YgQAAQDqMtNkAgDqMtNkAwDqMtNkBADqMtNk";
+// export const RTC_TOKEN = "00616cca950aca74708a9c3f1e2b7f2e655IACiT5BFZ5x40VfaOuPY/QfsIrz8exoggXVcj9DO9cto2t15FHwAAAAAIgCLKlkRauj5YgQAAQDqMtNkAgDqMtNkAwDqMtNkBADqMtNk";
 
 export interface Options {
     appid: string,
     channel: string,
     uid: UID,
-    token: string
+    // token: string
 }
 
 export interface RTCInfo {
@@ -64,9 +63,11 @@ export async function join(client: IAgoraRTCClient, options: Options): Promise<R
         options: options,
     };
 
+    const token = await getRTCToken(options.channel);
+
     [options.uid, rtcInfo.audioTrack] = await Promise.all([
         // join the channel
-        client.join(options.appid, options.channel, options.token || null),
+        client.join(options.appid, options.channel, token || null),
         // create local tracks, using microphone and camera
         AgoraRTC.createMicrophoneAudioTrack(),
         // AgoraRTC.createCameraVideoTrack()
@@ -77,4 +78,19 @@ export async function join(client: IAgoraRTCClient, options: Options): Promise<R
     return new Promise<RTCInfo>((resolve, reject) => {
         resolve(rtcInfo);
     })
+}
+
+export function getRTCToken(channelName: string) {
+    return new Promise<string>((reslove, reject) => {
+        axios({
+            method: 'get',
+            url: 'http://cwiki.cn:8080/rtcToken',
+            responseType: 'json',
+            params: {
+                channelName: channelName
+            }
+        }).then(function (response) {
+            reslove(response.data.key);
+        });
+    });
 }
