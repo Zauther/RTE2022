@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { IAgoraRTCClient } from "agora-rtc-sdk-ng";
+import { IAgoraRTCClient, IMicrophoneAudioTrack } from "agora-rtc-sdk-ng";
 import "./index.less"
 import Play from "../../service/play";
 import { getRtcClient, join, leave } from "../../utils/RTCUtils";
@@ -7,11 +7,12 @@ import { getRtcClient, join, leave } from "../../utils/RTCUtils";
 const APP_ID = "16cca950aca74708a9c3f1e2b7f2e655";
 const APP_CERTIFICATE = "3a224adcf8e24a808a6906179379221b";
 const CHANNEL_NAME = "rte2022";
+let audioTrack: IMicrophoneAudioTrack | null | undefined = null;
+let isTalk: boolean = false;
 
 export default function Roles(props: any) {
   const [roles, setRoles] = useState([]);
   const [roleId, setRoleId] = useState<number | null>(null);
-  const [rtcInfo, setRtcInfo] = useState<any>(null);
 
   useEffect(() => {
     const res = Play.getPlayInfo(1)
@@ -28,17 +29,17 @@ export default function Roles(props: any) {
       setRoleId(id);
     }
     if (roleId && id !== roleId) {
-      console.error("this is not your role!")
+      console.error("这不是你所选的角色，不能操作!")
       return;
     }
 
     const rs = roles.map((r: any) => {
       if (r.id === id) {
         if (r.choosed) {
-          leave(rtcClient, rtcInfo.audioTrack);
+          leave(rtcClient, audioTrack);
         } else {
           join(rtcClient, option).then((info) => {
-            setRtcInfo(info);
+            audioTrack = info.audioTrack;
           });
         }
         return {
@@ -58,7 +59,8 @@ export default function Roles(props: any) {
 
     roles.forEach((role: any) => {
       items.push(
-        <div key={role.uid} className={`role-item ${role.choosed ? 'role-item-choosed' : 'role-item-not-choosed'}`}
+        <div key={role.uid} 
+          className={`role-item ${role.choosed ? 'role-item-choosed' : 'role-item-not-choosed'} ${role.choosed && isTalk ? 'sound-wave' : ''}`}
           style={{ backgroundImage: "url('" + role.image + "')"}}
           onClick={() => itemClick(rtcClient, +role.id)}>
         </div>

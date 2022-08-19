@@ -5,16 +5,20 @@
   transform: translate(-50%, 0);
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   z-index: 10;
 
   .role-item {
+    position: relative;
     background-size: cover; 
     width: 80px;
     height: 80px; 
     border-radius: 50%; 
-    margin: 0 20px;
+    top: 0;
+    left: 20px;
+    // margin: 0 20px;
     cursor: pointer;
+    z-index: 5;
   }
 
   .role-item.role-item-not-choosed {
@@ -23,5 +27,49 @@
 
   .role-item:hover {
     box-shadow: black 5px;
+  }
+
+  .sound-wave::before {
+    content: "";
+    position: absolute;
+    border: 3px solid rgb(255, 223, 140);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-name: SoundWave;
+    animation-delay: 0s;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: 2;
+  }
+
+  .sound-wave::after {
+    content: "";
+    position: absolute;
+    border: 3px solid rgb(255, 223, 140);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-name: SoundWave;
+    animation-delay: 1s;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    z-index: 2;
+  }
+
+  @keyframes SoundWave {
+    0% {transform: matrix(1.1, 0, 0, 1.1, -42, -42); opacity: 0.95;}
+    25% {transform: matrix(1.2, 0, 0, 1.2, -42, -42); opacity: 0.75;}
+    50% {transform: matrix(1.3, 0, 0, 1.3, -42, -42); opacity: 0.5;}
+    70% {transform: matrix(1.4, 0, 0, 1.4, -42, -42); opacity: 0.25;}
+    100% {transform: matrix(1.5, 0, 0, 1.5, -42, -42); opacity: 0.05;}
   }
 }
