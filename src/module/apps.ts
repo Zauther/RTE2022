@@ -1,6 +1,6 @@
 import { apps, register } from "@netless/fastboard";
 import Dice from "./dice";
-import DiceIcon from "../../assets/dice.png"
+import DiceIcon from "../../src/assets/dice.png"
 // import Plyr from "@netless/app-plyr"
 // import TicTacToe from "./TicTacToe";
 

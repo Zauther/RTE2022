@@ -34,7 +34,6 @@ export interface RTCInfo {
     audioTrack?: IMicrophoneAudioTrack;
     user?: IAgoraRTCRemoteUser;
     mediaType?: "audio" | "video"
-
 }
 
 export function getRtcClient(): IAgoraRTCClient {
@@ -59,9 +58,7 @@ export async function join(client: IAgoraRTCClient, options: Options): Promise<R
         // Unsubscribe from the tracks of the remote user.
         client.unsubscribe(user);
     });
-    var rtcInfo: RTCInfo = {
-        options: options,
-    };
+    let rtcInfo: RTCInfo = { options };
 
     const token = await getRTCToken(options.channel);
 
@@ -78,6 +75,14 @@ export async function join(client: IAgoraRTCClient, options: Options): Promise<R
     return new Promise<RTCInfo>((resolve, reject) => {
         resolve(rtcInfo);
     })
+}
+
+export async function leave(rtcClient: IAgoraRTCClient, audioTrack: any) {
+  // Destroy the local audio track.
+  audioTrack.close();
+  // Leave the channel.
+  await rtcClient.leave();
+  console.log("leave success");
 }
 
 export function getRTCToken(channelName: string) {

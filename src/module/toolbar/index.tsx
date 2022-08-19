@@ -4,11 +4,11 @@ import { TYPES } from "../window";
 import { event } from "../../index";
 import clipboard from "clipboard-js";
 
-import RoomIcon from "../../../assets/room.png";
-import PlayIcon from "../../../assets/play.png";
-import ClueIcon from "../../../assets/clue.png";
-import AudioIcon from "../../../assets/audio.png";
-import VoiceIcon from "../../../assets/voice.png";
+import RoomIcon from "../../assets/room.png";
+import PlayIcon from "../../assets/play.png";
+import ClueIcon from "../../assets/clue.png";
+import AudioIcon from "../../assets/audio.png";
+import VoiceIcon from "../../assets/voice.png";
 
 import "./index.less";
 
