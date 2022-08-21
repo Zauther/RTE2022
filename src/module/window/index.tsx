@@ -32,14 +32,7 @@ export default function Window(props: any) {
     });
 
     event.on("window", ((res: any) => {
-      console.log("window ======= ", res)
       if (res?.isAdmin && res?.type === TYPES.CLUE) {
-        console.log("set Admin clue ======= ", (res?.data || []).map((r: any) => {
-          return {
-            ...r,
-            checked: false
-          }
-        }))
         setData({
           ...res,
           data: (res?.data || []).map((r: any) => {
@@ -100,7 +93,6 @@ export default function Window(props: any) {
       })
       
       const clues = (data?.data || []).filter((c: any) => c.checked || c.name === clue.name);
-      console.log("shareClue ======= ", clues, context)
       sendClues(clues, context);
     }
   }
