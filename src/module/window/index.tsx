@@ -15,9 +15,14 @@ export default function Window(props: any) {
 
   // 更新window显示内容
   useEffect(() => {
-    // addCluesListener().then((res: any) => {
-    //   console.log("CluesListener ======= ", res)
-    // })
+    window.room.addMagixEventListener("sendClues", (clueData: any) => {
+      if (!data.isAdmin) {
+        setData({
+          ...data,
+          ...clueData
+        })
+      }
+    });
 
     event.on("window", ((res: any) => {
       console.log("window ======= ", res)
@@ -65,7 +70,10 @@ export default function Window(props: any) {
   useEffect(() => {
     if (data?.isAdmin && data?.type === TYPES.CLUE) {
       const clues = (data?.data || []).filter((clue: any) => clue.checked);
-      // dispatchClues(clues);
+      window.room.dispatchMagixEvent("sendClues", {
+        isAdmin: false,
+        data: clues
+      });
     }
   }, [data])
 
