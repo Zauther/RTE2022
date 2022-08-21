@@ -79,3 +79,24 @@ export function addCluesListener(currentUser: User | undefined) {
     });
 }
 ////////////////////////////////////////////
+
+
+export declare interface SoundEvent {
+  roleId: number;
+  roomUserId: string;
+}
+
+export function dispatchSound(soundEvent: SoundEvent) {
+  dispatch("soundEvent", soundEvent);
+}
+
+export function addSoundListener(currentUser: User | undefined) {
+  return new Promise<SoundEvent>((reslove, reject) => {
+      window.room.addMagixEventListener("soundEvent", (message) => {
+          const soundEvent: SoundEvent = message.payload;
+          if (soundEvent.roomUserId == window.appContext.getRoom()?.uid) {
+              reslove(soundEvent);
+          }
+      });
+  });
+}

@@ -3,6 +3,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import Play from "../../service/play";
 import { getRtcClient, join, leave } from "../../utils/RTCUtils";
 import "./index.less";
+import { MyContext } from "../../index";
+import { User, getCurrentRoomUID } from "../../users/UserManager";
 
 const APP_ID = "16cca950aca74708a9c3f1e2b7f2e655";
 const APP_CERTIFICATE = "3a224adcf8e24a808a6906179379221b";
@@ -21,7 +23,7 @@ export default function Roles(props: any) {
     setRoles(res.roles as [])
   }, [])
 
-  const itemClick = (rtcClient: IAgoraRTCClient, id: number) => {
+  const itemClick = (rtcClient: IAgoraRTCClient, id: number, context: any) => {
     const option = {
       appid: APP_ID,
       channel: CHANNEL_NAME,
@@ -37,13 +39,36 @@ export default function Roles(props: any) {
 
   
     const rs = roles.map((r: any) => {
+      const roomUserId = getCurrentRoomUID();
+      const userName = "haha";
+
       if (r.id === id) {
         if (r.choosed) {
           leave(rtcClient, audioTrack);
+          const user = new User(
+            roomUserId,
+            userName,
+            "", // rtcUserId
+            id, // roleId
+            id === 0 ? true : false,
+          )
+          window.userManager.setUser(user);
         } else {
           join(rtcClient, option).then((info) => {
             audioTrack = info.audioTrack;
+            if (!context?.currentUser?.roleId) {
+              const rtcUserId = option?.uid;
+              const user = new User(
+                roomUserId,
+                userName,
+                rtcUserId, // rtcUserId
+                id, // roleId
+                id === 1 ? true : false,
+              )
+              window.userManager.setUser(user);
+            }
           });
+          
           RoomManager.bindRole(window.room.uid as string, `${id}`, window.room.uuid, window.userManager.isAdmin?"1":"0").then((response) => {
             console.log(`=====RoomManager bindRole====${response}`);
           });
@@ -59,7 +84,7 @@ export default function Roles(props: any) {
     setRoles(rs as []);
   }
 
-  const renderRoles = useCallback(() => {
+  const renderRoles = useCallback((context: any) => {
     const items: JSX.Element[] = [];
     const rtcClient = getRtcClient();
 
@@ -68,7 +93,7 @@ export default function Roles(props: any) {
         <div key={role.uid}
           className={`role-item ${role.choosed ? 'role-item-choosed' : 'role-item-not-choosed'} ${role.choosed && isTalk ? 'sound-wave' : ''}`}
           style={{ backgroundImage: "url('" + role.image + "')" }}
-          onClick={() => itemClick(rtcClient, +role.id)}>
+          onClick={() => itemClick(rtcClient, +role.id, context)}>
         </div>
       );
     })
@@ -78,9 +103,13 @@ export default function Roles(props: any) {
 
   return (
     <div className="roles">
-      {
-        renderRoles()
+      <MyContext.Consumer>
+      { 
+        value => {
+          return renderRoles(value)
+        }
       }
+      </MyContext.Consumer>
     </div>
   )
 }

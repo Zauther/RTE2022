@@ -10,23 +10,27 @@ export const TYPES = {
 
 export default function Window(props: any) {
   const [data, setData] = useState<any>(null);
-  const { show } = props;
+  const curUser = window.userManager.currentUser;
 
   useEffect(() => {
     event.on("window", ((res: any) => {
-      console.log("window ======= ", res, show)
       setData(res);
     }))
   }, [])
+
+  const shareClue = () => {
+
+  }
   
   return (
-    show ? <div className="window">
+    data?.show && data?.type ? <div className="window">
       {
         data.type === TYPES.PLAY ? <Play url={data?.data || ""} /> : <div>
         {
           (data?.data || []).map((item: any, index: number) => {
             return (
               <div key={index}>
+                <div className="hahah"></div>
                 <img className="clue" src={item.src} />
                 <span>{item.name}</span>
               </div>

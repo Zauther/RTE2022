@@ -16,10 +16,9 @@ import GlobalContext from "./state/Global";
 import { User, UserManager } from "./users/UserManager";
 
 export const event = new EventEmitter();
-
+export const MyContext = React.createContext(new GlobalContext());
 function App() {
   registering();
-  const [show, setShow] = useState<boolean>(false);
   const [options, setOptions] = useState<{ uuid: string, roomToken: string } | null>(null);
   const [roomId, setRoomId] = useState<string | null>(null);
   const [userManager, setUserManager] = useState<UserManager>(new UserManager());
@@ -73,25 +72,21 @@ function App() {
           if (ri.uid == currentUid) {
             let user = globalContext.currentUser;
             if (user == undefined) {
-              user = new User(ri.uid, "", "", ri.roleId, ri.isRoomAdmin);
+              user = new User(ri.uid, "", "", +ri.roleId, ri.isRoomAdmin);
             }
             globalContext.currentUser = user;
             globalContext.isAdmin = ri.isRoomAdmin;
 
           }
-          let user = new User(ri.uid, "", "", ri.roleId, ri.isRoomAdmin);
+          let user = new User(ri.uid, "", "", +ri.roleId, ri.isRoomAdmin);
           globalContext.setPlayer(user);
           setGlobalContext(globalContext);
         })
 
       })
     }
-
-
   }
 
-
-  const MyContext = React.createContext(new GlobalContext());
   return (
     <MyContext.Provider value={globalContext}>
       <div className="app">
@@ -99,8 +94,8 @@ function App() {
           updateFastboardAndRoom={configRoom}
         />
         <Roles />
-        <Toolbar setShowWindow={(show: boolean) => setShow(show)} roomId={roomId} />
-        <Window show={show} />
+        <Toolbar roomId={roomId} />
+        <Window />
       </div>
     </MyContext.Provider>
   );

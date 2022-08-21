@@ -1,6 +1,6 @@
 import AgoraRTC, { IAgoraRTCClient, IAgoraRTCRemoteUser, IMicrophoneAudioTrack, UID } from "agora-rtc-sdk-ng";
 import axios from 'axios';
-
+import { dispatchSound } from "../events/EventsManager";
 
 /*
  * 使用姿势
@@ -45,7 +45,7 @@ export async function join(client: IAgoraRTCClient, options: Options): Promise<R
         // Subscribe to the remote user when the SDK triggers the "user-published" event
         client.subscribe(user, mediaType);
         console.log("subscribe success");
-        
+
         // If the remote user publishes an audio track.
         if (mediaType === "audio") {
             // Get the RemoteAudioTrack object in the AgoraRTCRemoteUser object.

@@ -11,6 +11,7 @@ export class UserManager {
         if (user == undefined || user == null) {
             return;
         }
+        console.log("user ======= ", user)
         if (user.roomUserId == getCurrentRoomUID()) {
             this.currentUser = user;
         }
@@ -36,9 +37,9 @@ export class User {
     userName: string | undefined;
     roomUserId: string | undefined;
     rtcUserId: string | undefined;
-    roleId: string | undefined;
+    roleId: number | undefined;
 
-    constructor(roomUserId: string, userName: string, rtcUserId: string, roleId: string, isAdmin?: boolean | false) {
+    constructor(roomUserId: string, userName: string, rtcUserId: string, roleId: number, isAdmin?: boolean | false) {
         this.roomUserId = roomUserId;
         this.userName = userName;
         this.rtcUserId = rtcUserId;
