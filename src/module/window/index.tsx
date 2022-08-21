@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { event } from "../../index";
 import Play from "../play/play";
-import { addCluesListener } from "../../events/EventsManager";
+import { addCluesListener, dispatchClues } from "../../events/EventsManager";
 import "./index.less";
 
 export const TYPES = {
@@ -13,10 +13,11 @@ export default function Window(props: any) {
   const [data, setData] = useState<any>(null);
   const [selectAll, setSelectAll] = useState<boolean>(false);
 
+  // 更新window显示内容
   useEffect(() => {
-    // addCluesListener().then((res: any) => {
-    //   console.log("CluesListener ======= ", res)
-    // })
+    addCluesListener().then((res: any) => {
+      console.log("CluesListener ======= ", res)
+    })
 
     event.on("window", ((res: any) => {
       console.log("window ======= ", res)
@@ -36,6 +37,7 @@ export default function Window(props: any) {
     }))
   }, [])
 
+  // 全选更新data
   useEffect(() => {
     if (selectAll) {
       setData({
@@ -59,6 +61,13 @@ export default function Window(props: any) {
       })
     }
   }, [selectAll])
+
+  useEffect(() => {
+    if (data?.isAdmin && data?.type === TYPES.CLUE) {
+      const clues = (data?.data || []).filter((clue: any) => clue.checked);
+      dispatchClues(clues);
+    }
+  }, [data])
 
   const shareClue = (clue: any) => {
     if (data?.isAdmin) {
