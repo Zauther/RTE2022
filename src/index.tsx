@@ -84,10 +84,6 @@ function App() {
           })
         })
       }
-<<<<<<< HEAD
-      console.log('=====room uid======', uid);
-=======
->>>>>>> 837acf46870ae1c6f805b23cfbb304f54f7a4f67
     }
   }, [])
 
@@ -121,27 +117,6 @@ function App() {
       // RoomManager.bindRole()
       const currentUid = fastboardAndRoom.room.uid;
 
-<<<<<<< HEAD
-      RoomManager.queryRolesByRoomId(fastboardAndRoom.room.uuid as string).then((roomRolesInfos: Array<RoomRolesInfo>) => {
-        console.log('===queryRolesByRoomId===', roomRolesInfos, 'currentUid ====', currentUid)
-        roomRolesInfos.forEach((ri) => {
-
-          if (ri.uid == currentUid) {
-            let user = globalContext.currentUser;
-            if (user == undefined) {
-              user = new User(ri.uid, "", "", +ri.roleId, ri.isRoomAdmin);
-            }
-            globalContext.currentUser = user;
-            globalContext.isAdmin = ri.isRoomAdmin;
-          }
-          let user = new User(ri.uid, "", "", +ri.roleId, ri.isRoomAdmin);
-          globalContext.setPlayer(user);
-          setGlobalContext(globalContext);
-        })
-        console.log('===RoomId===', globalContext)
-
-      })
-=======
       queryRolesByRoomId(fastboardAndRoom.room.uuid as string, currentUid);
       // RoomManager.queryRolesByRoomId(fastboardAndRoom.room.uuid as string).then((roomRolesInfos: Array<RoomRolesInfo>) => {
       //   console.log(`===queryRolesByRoomId===${JSON.stringify(roomRolesInfos)}, currentUid=${currentUid}`)
@@ -162,7 +137,6 @@ function App() {
       //   // console.log(`===RoomId===${JSON.stringify(globalContext)}`)
 
       // })
->>>>>>> 837acf46870ae1c6f805b23cfbb304f54f7a4f67
 
       globalContext.room = fastboardAndRoom.room;
       console.log("===globalContext====" + globalContext.room.uid);
