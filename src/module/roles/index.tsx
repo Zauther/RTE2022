@@ -35,9 +35,7 @@ export default function Roles(props: any) {
       return;
     }
 
-    RoomManager.bindRole(window.room.uid as string, `${roleId}`, window.room.uuid, window.userManager.isAdmin?"1":"0").then((response) => {
-      console.log(`=====RoomManager bindRole====${response}`);
-    });
+  
     const rs = roles.map((r: any) => {
       if (r.id === id) {
         if (r.choosed) {
@@ -45,6 +43,9 @@ export default function Roles(props: any) {
         } else {
           join(rtcClient, option).then((info) => {
             audioTrack = info.audioTrack;
+          });
+          RoomManager.bindRole(window.room.uid as string, `${id}`, window.room.uuid, window.userManager.isAdmin?"1":"0").then((response) => {
+            console.log(`=====RoomManager bindRole====${response}`);
           });
         }
         return {

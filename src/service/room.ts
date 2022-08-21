@@ -5,9 +5,6 @@ import request from "../utils/request";
 const roomManagerRequest = axios.create({
   baseURL: 'https://admin.thwj.tejiayun.com/',
   timeout: 2000,
-  headers: {
-    'User-Agent': 'apifox/1.0.0 (https://www.apifox.cn)'
-  }
 });
 
 export declare interface RoomInfo {
@@ -156,7 +153,6 @@ class Room {
       data.append('roleId', roleId);
       data.append('roomId', roomId);
       data.append('isRoomAdmin', isRoomAdmin);
-      console.log(`====bindRole FormData=====${JSON.stringify(data)}`);
       roomManagerRequest({
         method: 'post',
         url: '/playroom/bindRole',
@@ -167,14 +163,15 @@ class Room {
     });
   }
 
-  queryRoles(roomId: string) {
+  queryRolesByRoomId(roomId: string) {
     return new Promise<RoomInfo>((reslove, reject) => {
       roomManagerRequest({
-        method: 'post',
+        method: 'get',
         url: '/playroom/roles',
-        data: {
+        params:{
           roomId: roomId,
         }
+      
       }).then(function (response: any) {
         reslove(response.data);
       });
