@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { event } from "../../index";
 import Play from "../play/play";
 import "./index.less";
-import { event } from "../../index";
 
 export const TYPES = {
   PLAY: 1, // 剧本
@@ -10,7 +10,6 @@ export const TYPES = {
 
 export default function Window(props: any) {
   const [data, setData] = useState<any>(null);
-  const curUser = window.userManager.currentUser;
 
   useEffect(() => {
     event.on("window", ((res: any) => {

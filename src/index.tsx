@@ -88,7 +88,7 @@ function App() {
       const currentUid = fastboardAndRoom.room.uid;
 
       RoomManager.queryRolesByRoomId(fastboardAndRoom.room.uuid as string).then((roomRolesInfos: Array<RoomRolesInfo>) => {
-        console.log(`===queryRolesByRoomId===${JSON.stringify(roomRolesInfos)}`)
+        console.log(`===queryRolesByRoomId===${JSON.stringify(roomRolesInfos)}, currentUid=${currentUid}`)
         roomRolesInfos.forEach((ri) => {
 
           if (ri.uid == currentUid) {
@@ -103,7 +103,15 @@ function App() {
           globalContext.setPlayer(user);
           setGlobalContext(globalContext);
         })
+        console.log(`===RoomId===${JSON.stringify(globalContext)}`)
+
       })
+
+      globalContext.room = fastboardAndRoom.room;
+      console.log("===globalContext===="+globalContext.room.uid);
+      globalContext.fastboardApp = fastboardAndRoom.fastboardApp;
+
+      setGlobalContext(globalContext);
 
       // 修改url，为 uid=xx&roomId=xxx
 

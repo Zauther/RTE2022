@@ -13,6 +13,7 @@ let audioTrack: IMicrophoneAudioTrack | null | undefined = null;
 let isTalk: boolean = false;
 
 import RoomManager from "../../service/room";
+import GlobalContext from "../../state/Global";
 
 export default function Roles(props: any) {
   const [roles, setRoles] = useState([]);
@@ -23,7 +24,7 @@ export default function Roles(props: any) {
     setRoles(res.roles as [])
   }, [])
 
-  const itemClick = (rtcClient: IAgoraRTCClient, id: number, context: any) => {
+  const itemClick = (rtcClient: IAgoraRTCClient, id: number, context: GlobalContext) => {
     const option = {
       appid: APP_ID,
       channel: CHANNEL_NAME,
@@ -37,7 +38,7 @@ export default function Roles(props: any) {
       return;
     }
 
-  
+
     const rs = roles.map((r: any) => {
       const roomUserId = getCurrentRoomUID();
       const userName = "haha";
@@ -68,9 +69,8 @@ export default function Roles(props: any) {
               window.userManager.setUser(user);
             }
           });
-          
-          RoomManager.bindRole(window.room.uid as string, `${id}`, window.room.uuid, window.userManager.isAdmin?"1":"0").then((response) => {
-            console.log(`=====RoomManager bindRole====${response}`);
+          RoomManager.bindRole(context.room?.uid as string, `${id}`, context.room?.uuid as string, context.isAdmin ? "1" : "0").then((response) => {
+            console.log(`=====RoomManager bindRole====${JSON.stringify(response)}`);
           });
         }
         return {
@@ -104,11 +104,11 @@ export default function Roles(props: any) {
   return (
     <div className="roles">
       <MyContext.Consumer>
-      { 
-        value => {
-          return renderRoles(value)
+        {
+          value => {
+            return renderRoles(value)
+          }
         }
-      }
       </MyContext.Consumer>
     </div>
   )
