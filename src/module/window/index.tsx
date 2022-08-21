@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { event } from "../../index";
 import Play from "../play/play";
-import { addCluesListener } from "../../events/EventsManager";
 import "./index.less";
 
 export const TYPES = {
