@@ -16,11 +16,13 @@ export default function Window(props: any) {
   // 更新window显示内容
   useEffect(() => {
     event.on("room", (room: any) => {
-      room.addMagixEventListener("sendClues", (clueData: any) => {
-        if (!data.isAdmin) {
+      room.addMagixEventListener("sendClues", (res: any) => {
+        const { payload } = res;
+        console.log("listen to sendClues: ", payload)
+        if (!payload?.isAdmin) {
           setData({
             ...data,
-            ...clueData
+            ...payload
           })
         }
       });
@@ -29,6 +31,12 @@ export default function Window(props: any) {
     event.on("window", ((res: any) => {
       console.log("window ======= ", res)
       if (res?.isAdmin && res?.type === TYPES.CLUE) {
+        console.log("set Admin clue ======= ", (res?.data || []).map((r: any) => {
+          return {
+            ...r,
+            checked: false
+          }
+        }))
         setData({
           ...res,
           data: (res?.data || []).map((r: any) => {
