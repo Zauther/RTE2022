@@ -10,7 +10,7 @@ declare global {
     }
 }
 
-window.appContext = window.appContext || {};
-window.userManager = new UserManager();
-window.fastboardApp = window.fastboardApp || null;
-window.room = window.room || null;
+// window.appContext = window.appContext || {};
+// window.userManager = new UserManager();
+// window.fastboardApp = window.fastboardApp || null;
+// window.room = window.room || null;
