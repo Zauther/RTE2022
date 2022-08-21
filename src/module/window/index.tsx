@@ -15,7 +15,7 @@ export default function Window(props: any) {
 
   // 更新window显示内容
   useEffect(() => {
-    event.on("window", (room: any) => {
+    event.on("room", (room: any) => {
       room.addMagixEventListener("sendClues", (clueData: any) => {
         if (!data.isAdmin) {
           setData({
