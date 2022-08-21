@@ -24,7 +24,6 @@ function App() {
   const [userManager, setUserManager] = useState<UserManager>(new UserManager());
   const [globalContext, setGlobalContext] = useState<GlobalContext>(new GlobalContext());
 
-
   useEffect(() => {
     window.userManager = new UserManager();
     if (!/roomId/.test(window.location.search)) { // 如果没有uuid则生成一个作为房间
@@ -46,15 +45,38 @@ function App() {
 
       console.log(`=====room admin======${JSON.stringify(globalContext)}`);
     } else { // 如果有uuid则加入uuid对应的房间
+      // admin or user
       console.log(`=====room players======`);
       const search_obj = search_parse();
       const uuid = search_obj['roomId'];
-      Room.joinRoom(Role.Writer, uuid).then((res: any) => {
-        setOptions({
-          uuid: res.uuid,
-          roomToken: res.roomToken
+      const uid = search_obj['uid'];
+      // 分享url，此时无uid，uid随后自动生成
+      if(uid == undefined){
+        Room.joinRoom( Role.Writer, uuid).then((res: any) => {
+          setOptions({
+            uuid: res.uuid,
+            roomToken: res.roomToken
+          });
         });
-      });
+
+      }else{ // 刷新url，此时有uid
+        RoomManager.queryRolesByRoomId(uuid).then((roomRolesInfos: Array<RoomRolesInfo>) => {
+          console.log(`===queryRolesByRoomId===${JSON.stringify(roomRolesInfos)}`)
+          roomRolesInfos.forEach((ri) => {
+            console.log(`===roomRolesInfos=====${ri}`);
+            if (ri.uid == uid) { // 查询到已经注册过
+              let role = ri.isRoomAdmin ? Role.Admin : Role.Writer;
+              Room.joinRoom(role, uuid).then((res: any) => {
+                setOptions({
+                  uuid: res.uuid,
+                  roomToken: res.roomToken
+                });
+              });
+            }
+          })
+        })
+      }
+      console.log(`=====room uid======${JSON.stringify(uid)}`);
     }
   }, [])
 
@@ -76,14 +98,26 @@ function App() {
             }
             globalContext.currentUser = user;
             globalContext.isAdmin = ri.isRoomAdmin;
-
           }
           let user = new User(ri.uid, "", "", +ri.roleId, ri.isRoomAdmin);
           globalContext.setPlayer(user);
           setGlobalContext(globalContext);
         })
-
       })
+
+      // 修改url，为 uid=xx&roomId=xxx
+
+      let url = new URL(window.location.href);
+      url.searchParams.set("roomId",fastboardAndRoom.room.uuid);
+      // // url.hostname
+      console.log(`globalContext.uuid=${fastboardAndRoom.room.uuid}`);
+      // let newUrl;
+      // if (globalContext.isAdmin) {
+      //   newUrl = `/?${url.searchParams}&admin=true`;
+      // } else {
+      //   newUrl = `/?${url.searchParams}`;
+      // }
+      history.replaceState({}, "", url);
     }
   }
 
@@ -102,3 +136,25 @@ function App() {
 }
 
 ReactDOM.render(<App />, document.getElementById("app"));
+
+// function MyRoute() {
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         {/* <Route path="/" element={<CreateOrJoinRoomPage />} /> */}
+//         <Route path="/" element={<App />} />
+//         {/* <Route path="/createRoom" element={<CreateOrJoinRoomPage />} /> */}
+//         {/* <Route path="/room/:uuid/" element={<App />} /> */}
+//         {/* <Route path="/:admin/room/:uuid" element={<App />} /> */}
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
+// window.userManager = new UserManager();
+// const root = ReactDOM.createRoot(document.getElementById("app"));
+// root.render(<MyRoute />);
+
+// function useParams(): { uuid: any; } {
+//   throw new Error("Function not implemented.");
+// }

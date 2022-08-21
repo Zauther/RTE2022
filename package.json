@@ -21,6 +21,7 @@
     "npm": "^8.0.0"
   },
   "dependencies": {
+    "@netless/app-countdown": "^0.0.2",
     "@netless/app-plyr": "^0.2.1",
     "@netless/app-slide": "^0.2.5",
     "@netless/synced-store": "^2.0.6",

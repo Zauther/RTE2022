@@ -1,6 +1,8 @@
 import { apps, register } from "@netless/fastboard";
 import Dice from "./dice";
 import DiceIcon from "../../src/assets/dice.png"
+import TimeCountIcon from "../../src/assets/timecount.png"
+import Countdown from "@netless/app-countdown"
 // import Plyr from "@netless/app-plyr"
 // import TicTacToe from "./TicTacToe";
 
@@ -27,6 +29,22 @@ export const registering = () => {
                     kind: "Dice",
                     options: {
                         title: "骰子",
+                    },
+                });
+            },
+        }
+    );
+    apps.push(
+        {
+            kind: "Countdown",
+            label: "计时器",
+            icon: TimeCountIcon,
+            onClick: (fastboard: any) => {
+                fastboard.manager.addApp({
+                    src: Countdown,
+                    kind: "Countdown",
+                    options: {
+                        title: "计时器",
                     },
                 });
             },
