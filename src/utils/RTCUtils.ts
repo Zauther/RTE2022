@@ -1,6 +1,6 @@
 import AgoraRTC, { IAgoraRTCClient, IAgoraRTCRemoteUser, IMicrophoneAudioTrack, UID } from "agora-rtc-sdk-ng";
 import axios from 'axios';
-import { dispatchSound } from "../events/EventsManager";
+// import { dispatchSound } from "../events/EventsManager";
 
 /*
  * 使用姿势

@@ -92,7 +92,7 @@ export default function Toolbar(props: any) {
 
       })
     }
-
+    console.log(`=========curUser=========${JSON.stringify(curUser)}`);
     if (itemId === 1) {
       let windowData: any = {
         show: true,
@@ -154,6 +154,7 @@ export default function Toolbar(props: any) {
     e.stopPropagation();
 
     if (type === "media") {
+      console.log(`data=${data}`);
       context.fastboardApp?.insertMedia("mic", data.src);
     } else {
       // 发送显示线索卡事件

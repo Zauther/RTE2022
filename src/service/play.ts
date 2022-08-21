@@ -21,10 +21,10 @@ class Play {
         }
       ],
       videos: [
-        {
-          name: "视频1",
-          src: ""
-        }
+        // {
+        //   name: "视频1",
+        //   src: ""
+        // }
       ],
       roles: [
         {

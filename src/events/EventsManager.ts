@@ -52,32 +52,32 @@ console.log(`== getCurrentRoomUID ==${JSON.stringify(context.getRoom()?.uid)}`);
 dispatchClues(clueEvent);
 */
 
-// export declare interface ClueInfo {
-//     clueName: string;
-//     clueUrl: string;
-// }
+export declare interface ClueInfo {
+    clueName: string;
+    clueUrl: string;
+}
 
-// export declare interface ClueEvent {
-//     type: number; // 0分发，1召回
-//     roomUserId: string;
-//     clues: ClueInfo[];
-// }
+export declare interface ClueEvent {
+    type: number; // 0分发，1召回
+    roomUserId: string;
+    clues: ClueInfo[];
+}
 
 
-// export function dispatchClues(clueEvent: ClueEvent) {
-//     dispatch("clueEvent", clueEvent);
-// }
+export function dispatchClues(clueEvent: ClueEvent) {
+    window.room.dispatchMagixEvent("clueEvent", clueEvent);
+}
 
-// export function addCluesListener(currentUser?: User | undefined) {
-//     return new Promise<ClueEvent>((reslove, reject) => {
-//         window.room.addMagixEventListener("clueEvent", (message) => {
-//             const clueEvent: ClueEvent = message.payload;
-//             if (clueEvent.roomUserId == window.appContext.getRoom()?.uid) {
-//                 reslove(clueEvent);
-//             }
-//         });
-//     });
-// }
+export function addCluesListener(currentUser?: User | undefined) {
+    return new Promise<ClueEvent>((reslove, reject) => {
+        window.room.addMagixEventListener("clueEvent", (message) => {
+            const clueEvent: ClueEvent = message.payload;
+            if (clueEvent.roomUserId == window.appContext.getRoom()?.uid) {
+                reslove(clueEvent);
+            }
+        });
+    });
+}
 ////////////////////////////////////////////
 
 

@@ -15,8 +15,16 @@ export default function Window(props: any) {
 
   // 更新window显示内容
   useEffect(() => {
+    // window.room.addMagixEventListener("sendClues", (clueData: any) => {
+    //     if (!data.isAdmin) {
+    //       setData({
+    //         ...data,
+    //         ...clueData
+    //       })
+    //     }
+    //   });
     event.on("room", (room: any) => {
-      room.addMagixEventListener("sendClues", (clueData: any) => {
+      window.room.addMagixEventListener("sendClues", (clueData: any) => {
         if (!data.isAdmin) {
           setData({
             ...data,
@@ -26,22 +34,22 @@ export default function Window(props: any) {
       });
     });
 
-    event.on("window", ((res: any) => {
-      console.log("window ======= ", res)
-      if (res?.isAdmin && res?.type === TYPES.CLUE) {
-        setData({
-          ...res,
-          data: (res?.data || []).map((r: any) => {
-            return {
-              ...r,
-              checked: false
-            }
-          })
-        })
-      } else if (res?.type === TYPES.PLAY) {
-        setData(res);
-      }
-    }))
+    // event.on("window", ((res: any) => {
+    //   console.log("window ======= ", res)
+    //   if (res?.isAdmin && res?.type === TYPES.CLUE) {
+    //     setData({
+    //       ...res,
+    //       data: (res?.data || []).map((r: any) => {
+    //         return {
+    //           ...r,
+    //           checked: false
+    //         }
+    //       })
+    //     })
+    //   } else if (res?.type === TYPES.PLAY) {
+    //     setData(res);
+    //   }
+    // }))
   }, [])
 
   // 全选更新data
