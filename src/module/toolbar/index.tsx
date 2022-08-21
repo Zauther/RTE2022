@@ -66,7 +66,7 @@ export default function Toolbar(props: any) {
   }, [])
 
   const click = (value: GlobalContext, itemId: number) => {
-    const curUser = value.currentUser;
+    const curUser = value?.currentUser;
     const roles = Play.getPlayInfo(1).roles;
 
     let its = [];
