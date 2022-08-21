@@ -69,6 +69,7 @@ export default function Roles(props: any) {
               window.userManager.setUser(user);
             }
           });
+          console.log(`===RoomManager===,${JSON.stringify(context?.currentUser)}`)
           RoomManager.bindRole(context.room?.uid as string, `${id}`, context.room?.uuid as string, context.isAdmin ? "1" : "0").then((response) => {
             console.log(`=====RoomManager bindRole====${JSON.stringify(response)}`);
           });
