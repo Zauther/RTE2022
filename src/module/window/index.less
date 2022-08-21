@@ -13,4 +13,29 @@
   .clue {
     width: 100%;
   }
+
+  .info {
+    margin: 10px;
+  }
+  
+  .check-box {
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+    border: 1px solid grey;
+  }
+
+  .check-box.check-box-checked::after {
+    position: absolute;
+    content: "";
+    width: 5px;
+    height: 10px;
+    left: 2px;
+    bottom: 1px;
+    border-right: 2px solid green;
+    border-bottom: 2px solid green;
+    transform: rotate(45deg);
+  }
 }

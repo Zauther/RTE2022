@@ -9,7 +9,7 @@ export function dispatch(event: string, playloads: {}) {
 
 /////////////// 用户信息同步 ///////////////
 export function dispatchUserInfo(user: User) {
-    console.log(`====dispatchUserInfo===${JSON.stringify(user)}`)
+    console.log('====dispatchUserInfo===', user)
     window.room.dispatchMagixEvent("userInfoEvent", user.toJson());
 }
 
@@ -22,7 +22,7 @@ export function addUserInfoListener() {
                 , message.payload.userName, message.payload.rtcUserId, message.payload.isAdmin);
             
             window.userManager.setUser(user);
-            console.log(`====addUserInfoListener===${JSON.stringify(window.userManager)}`)
+            console.log('====addUserInfoListener===', window.userManager)
             reslove(user);
         });
     });
@@ -68,7 +68,7 @@ export function dispatchClues(clueEvent: ClueEvent) {
     dispatch("clueEvent", clueEvent);
 }
 
-export function addCluesListener(currentUser: User | undefined) {
+export function addCluesListener(currentUser?: User | undefined) {
     return new Promise<ClueEvent>((reslove, reject) => {
         window.room.addMagixEventListener("clueEvent", (message) => {
             const clueEvent: ClueEvent = message.payload;

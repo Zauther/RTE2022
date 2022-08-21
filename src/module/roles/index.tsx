@@ -40,38 +40,16 @@ export default function Roles(props: any) {
 
 
     const rs = roles.map((r: any) => {
-      const roomUserId = getCurrentRoomUID();
-      const userName = "haha";
-
       if (r.id === id) {
         if (r.choosed) {
           leave(rtcClient, audioTrack);
-          const user = new User(
-            roomUserId,
-            userName,
-            "", // rtcUserId
-            id, // roleId
-            id === 0 ? true : false,
-          )
-          window.userManager.setUser(user);
         } else {
           join(rtcClient, option).then((info) => {
             audioTrack = info.audioTrack;
-            if (!context?.currentUser?.roleId) {
-              const rtcUserId = option?.uid;
-              const user = new User(
-                roomUserId,
-                userName,
-                rtcUserId, // rtcUserId
-                id, // roleId
-                id === 1 ? true : false,
-              )
-              window.userManager.setUser(user);
-            }
           });
-          console.log(`===RoomManager===,${JSON.stringify(context?.currentUser)}`)
+          console.log("===RoomManager===", context, context?.currentUser)
           RoomManager.bindRole(context.room?.uid as string, `${id}`, context.room?.uuid as string, context.isAdmin ? "1" : "0").then((response) => {
-            console.log(`=====RoomManager bindRole====${JSON.stringify(response)}`);
+            console.log('=====RoomManager bindRole====', response);
           });
         }
         return {

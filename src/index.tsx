@@ -43,7 +43,7 @@ function App() {
       // userManager.isAdmin = true;
       // setUserManager(userManager);
 
-      console.log(`=====room admin======${JSON.stringify(globalContext)}`);
+      console.log('=====room admin======', globalContext);
     } else { // 如果有uuid则加入uuid对应的房间
       // admin or user
       console.log(`=====room players======`);
@@ -61,7 +61,7 @@ function App() {
 
       }else{ // 刷新url，此时有uid
         RoomManager.queryRolesByRoomId(uuid).then((roomRolesInfos: Array<RoomRolesInfo>) => {
-          console.log(`===queryRolesByRoomId===${JSON.stringify(roomRolesInfos)}`)
+          console.log('===queryRolesByRoomId===', roomRolesInfos)
           roomRolesInfos.forEach((ri) => {
             console.log(`===roomRolesInfos=====${ri}`);
             if (ri.uid == uid) { // 查询到已经注册过
@@ -84,7 +84,7 @@ function App() {
           })
         })
       }
-      console.log(`=====room uid======${JSON.stringify(uid)}`);
+      console.log('=====room uid======', uid);
     }
   }, [])
 
@@ -96,7 +96,7 @@ function App() {
       const currentUid = fastboardAndRoom.room.uid;
 
       RoomManager.queryRolesByRoomId(fastboardAndRoom.room.uuid as string).then((roomRolesInfos: Array<RoomRolesInfo>) => {
-        console.log(`===queryRolesByRoomId===${JSON.stringify(roomRolesInfos)}, currentUid=${currentUid}`)
+        console.log('===queryRolesByRoomId===', roomRolesInfos, 'currentUid ====', currentUid)
         roomRolesInfos.forEach((ri) => {
 
           if (ri.uid == currentUid) {
@@ -111,7 +111,7 @@ function App() {
           globalContext.setPlayer(user);
           setGlobalContext(globalContext);
         })
-        console.log(`===RoomId===${JSON.stringify(globalContext)}`)
+        console.log('===RoomId===', globalContext)
 
       })
 

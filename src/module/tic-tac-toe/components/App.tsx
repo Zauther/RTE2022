@@ -122,12 +122,12 @@ export function App({ context }: AppProps) {
   // }, [text]);
 
   // 获取当前用户id
-  console.log(`== context ==${ JSON.stringify(context.getRoom()?.uid)}`);
+  console.log('== context ==', context.getRoom()?.uid);
 
   
 
   context.addMagixEventListener("event",(ss:{})=>{
-    console.log(`== addMagixEventListener ==${ JSON.stringify(ss)}`);
+    console.log('== addMagixEventListener ==', ss);
     if(ss.sendID!=context.getRoom()?.uid){
       setText(ss.msg+"from"+ss.sendID);
     }

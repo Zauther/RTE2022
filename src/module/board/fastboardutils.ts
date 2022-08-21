@@ -98,7 +98,7 @@ export async function createFastboard<TEventData = any>({
   window.room = room;
 
   room.addMagixEventListener("currentUser", (msd) => {
-    console.log(`========${JSON.stringify(msd)}=========`);
+    console.log('========room currentUser=========', msd);
   });
 
   addUserInfoListener();

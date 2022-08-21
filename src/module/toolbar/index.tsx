@@ -64,15 +64,15 @@ export default function Toolbar(props: any) {
     ])
   }, [])
 
-  const click = (itemId: number) => {
-    const curUser = window.userManager.currentUser;
+  const click = (itemId: number, context: any) => {
+    const curUser = context.currentUser;
 
     let its = [];
     if (itemId === 1) {
       let windowData: any = {
         show: true,
         type: TYPES.PLAY,
-        data: plays.roles[curUser?.roleId as number].play,
+        data: ((plays.roles || []).filter((role: any) => role.id === curUser.roleId))[0].play,
       }
       // 打开关闭自己的窗口
       if (innerShowWindow.id === itemId) {
@@ -124,10 +124,10 @@ export default function Toolbar(props: any) {
     }
   }
 
-  const clickItem = (e: any, type: string, data: any) => {
+  const clickItem = (e: any, type: string, data: any, context: any) => {
     // 防止事件捕获触发click调用
     e.stopPropagation();
-    console.log(type, " ======== type", data, " ======== data")
+    console.log(type, " ======== type", data, " ======== data", context.currentUser.isAdmin)
     if (type === "media") {
       window?.fastboardApp?.insertMedia("mic", data.src);
     } else {
@@ -139,6 +139,7 @@ export default function Toolbar(props: any) {
       if (innerShowWindow.id === 2 && data.name === innerShowWindow.name) {
         event.emit('window',{
           ...windowData,
+          isAdmin: context?.isAdmin || false,
           show: !innerShowWindow.show
         });
         setInnerShowWindow({
@@ -149,6 +150,7 @@ export default function Toolbar(props: any) {
       } else {
         event.emit('window',{
           ...windowData,
+          isAdmin: context?.isAdmin || false,
           show: true
         });
         setInnerShowWindow({
@@ -169,13 +171,13 @@ export default function Toolbar(props: any) {
       <MyContext.Consumer>
         {
           value => {
-            const list = value.isAdmin ? items : items.slice(2);
+            const list = value.isAdmin ? items : items.slice(1);
             return list.map((item, index) => {
               return (
                 <div key={index}
                   className="toolbar-item"
                   style={{ background: `no-repeat center/60% url(${item.icon})` }}
-                  onClick={() => click(item.id)}
+                  onClick={() => click(item.id, value)}
                 >
                   {
                     item.list && item.showBubble ? <div className="toolbar-item-bubble">
@@ -183,7 +185,7 @@ export default function Toolbar(props: any) {
                         item.list.map((i: any, ind: number) => {
                           return (
                             <div key={ind} className="toolbar-item-bubble-line" 
-                              onClick={(e) => item.id === 0 ? copyRoomLink() : clickItem(e, i?.src ? "media":"clue", i)}>
+                              onClick={(e) => item.id === 0 ? copyRoomLink() : clickItem(e, i?.src ? "media":"clue", i, value)}>
                               {i.name}
                             </div>)
                         })
