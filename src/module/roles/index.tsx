@@ -73,6 +73,7 @@ export default function Roles(props: any) {
           RoomManager.bindRole(context.room?.uid as string, `${id}`, context.room?.uuid as string, context.isAdmin ? "1" : "0").then((response) => {
             console.log(`=====RoomManager bindRole====${JSON.stringify(response)}`);
           });
+          context?.room?.dispatchMagixEvent("updateUserInfo",{});
         }
         return {
           ...r,
@@ -88,7 +89,6 @@ export default function Roles(props: any) {
   const renderRoles = useCallback((context: any) => {
     const items: JSX.Element[] = [];
     const rtcClient = getRtcClient();
-
     roles.forEach((role: any) => {
       items.push(
         <div key={role.uid}
