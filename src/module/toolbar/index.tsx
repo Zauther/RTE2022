@@ -1,16 +1,17 @@
+import clipboard from "clipboard-js";
 import React, { useEffect, useState } from "react";
+import { event, MyContext } from "../../index";
 import Play from "../../service/play";
 import { TYPES } from "../window";
-import { event } from "../../index";
-import clipboard from "clipboard-js";
-import { MyContext } from "../../index";
 
-import RoomIcon from "../../assets/room.png";
-import PlayIcon from "../../assets/play.png";
-import ClueIcon from "../../assets/clue.png";
 import AudioIcon from "../../assets/audio.png";
+import ClueIcon from "../../assets/clue.png";
+import PlayIcon from "../../assets/play.png";
+import RoomIcon from "../../assets/room.png";
 import VoiceIcon from "../../assets/voice.png";
 
+import GlobalContext from "../../state/Global";
+import { User } from "../../users/UserManager";
 import "./index.less";
 
 export default function Toolbar(props: any) {
@@ -64,10 +65,36 @@ export default function Toolbar(props: any) {
     ])
   }, [])
 
-  const click = (itemId: number) => {
-    const curUser = window.userManager.currentUser;
+  const click = (value: GlobalContext, itemId: number) => {
+    const curUser = value.currentUser;
+    const roles = Play.getPlayInfo(1).roles;
 
     let its = [];
+
+    if (itemId == 0) {
+      console.log(`==================${JSON.stringify(items[0].list)}`);
+      let z = items[0].list[0];
+      items[0].list = [];
+      items[0].list.push(z);
+      value.players.forEach((user: User) => {
+        if (!user.isAdmin) {
+
+
+          const role = roles.find((r) => {
+            return r.id == user.roleId;
+          })
+          let a = {
+            id: user.roleId,
+            name: role?.name
+          }
+
+          items[0].list.push(a);
+          setItems(items);
+        }
+
+      })
+    }
+
     if (itemId === 1) {
       let windowData: any = {
         show: true,
@@ -124,12 +151,12 @@ export default function Toolbar(props: any) {
     }
   }
 
-  const clickItem = (e: any, type: string, data: any) => {
+  const clickItem = (value: GlobalContext, e: any, type: string, data: any) => {
     // 防止事件捕获触发click调用
     e.stopPropagation();
     console.log(type, " ======== type", data, " ======== data")
     if (type === "media") {
-      window?.fastboardApp?.insertMedia("mic", data.src);
+      value.fastboardApp?.insertMedia("mic", data.src);
     } else {
       let windowData: any = {
         show: true,
@@ -137,7 +164,7 @@ export default function Toolbar(props: any) {
         data: data?.data || [],
       }
       if (innerShowWindow.id === 2 && data.name === innerShowWindow.name) {
-        event.emit('window',{
+        event.emit('window', {
           ...windowData,
           show: !innerShowWindow.show
         });
@@ -147,7 +174,7 @@ export default function Toolbar(props: any) {
           id: 2
         });
       } else {
-        event.emit('window',{
+        event.emit('window', {
           ...windowData,
           show: true
         });
@@ -160,8 +187,33 @@ export default function Toolbar(props: any) {
     }
   }
 
-  const copyRoomLink = () => {
-    clipboard.copy(`${window.location.href}&roomId=${roomId}`)
+  const copyRoomLink = (context: GlobalContext,ind:number) => {
+
+    if(ind==0){
+      let url = new URL(window.location.href);
+      url.searchParams.delete("uid");
+      url.searchParams.delete("roomId");
+      url.searchParams.set("roomId", context.room?.uuid as string);
+      clipboard.copy(`${url}`);
+      return;
+    }
+
+    items[0].list.slice(1).forEach((u)=>{
+      const player:User[]= context.players.filter((player)=>{
+        return player.roleId == u.id;
+      })
+      if(player.length<=0){
+        return;
+      }
+
+      let url = new URL(window.location.href);
+      url.searchParams.delete("uid");
+      url.searchParams.delete("roomId");
+      url.searchParams.set("roomId", context.room?.uuid as string);
+      url.searchParams.set("uid",`${player[0].roomUserId}`);
+      clipboard.copy(`${url}`);
+    })
+   
   }
 
   return (
@@ -175,15 +227,15 @@ export default function Toolbar(props: any) {
                 <div key={index}
                   className="toolbar-item"
                   style={{ background: `no-repeat center/60% url(${item.icon})` }}
-                  onClick={() => click(item.id)}
+                  onClick={() => click(value, item.id)}
                 >
                   {
                     item.list && item.showBubble ? <div className="toolbar-item-bubble">
                       {
                         item.list.map((i: any, ind: number) => {
                           return (
-                            <div key={ind} className="toolbar-item-bubble-line" 
-                              onClick={(e) => item.id === 0 ? copyRoomLink() : clickItem(e, i?.src ? "media":"clue", i)}>
+                            <div key={ind} className="toolbar-item-bubble-line"
+                              onClick={(e) => item.id === 0 ? copyRoomLink(value,ind) : clickItem(value, e, i?.src ? "media" : "clue", i)}>
                               {i.name}
                             </div>)
                         })

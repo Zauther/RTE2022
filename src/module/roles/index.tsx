@@ -40,14 +40,14 @@ export default function Roles(props: any) {
 
 
     const rs = roles.map((r: any) => {
-      const roomUserId = getCurrentRoomUID();
+      const roomUserId = context.currentUser?.roomUserId;
       const userName = "haha";
 
       if (r.id === id) {
         if (r.choosed) {
           leave(rtcClient, audioTrack);
           const user = new User(
-            roomUserId,
+            `${roomUserId}`,
             userName,
             "", // rtcUserId
             id, // roleId
@@ -60,7 +60,7 @@ export default function Roles(props: any) {
             if (!context?.currentUser?.roleId) {
               const rtcUserId = option?.uid;
               const user = new User(
-                roomUserId,
+                `${roomUserId}`,
                 userName,
                 rtcUserId, // rtcUserId
                 id, // roleId
@@ -73,6 +73,7 @@ export default function Roles(props: any) {
           RoomManager.bindRole(context.room?.uid as string, `${id}`, context.room?.uuid as string, context.isAdmin ? "1" : "0").then((response) => {
             console.log(`=====RoomManager bindRole====${JSON.stringify(response)}`);
           });
+          context?.room?.dispatchMagixEvent("updateUserInfo",{});
         }
         return {
           ...r,
@@ -88,7 +89,6 @@ export default function Roles(props: any) {
   const renderRoles = useCallback((context: any) => {
     const items: JSX.Element[] = [];
     const rtcClient = getRtcClient();
-
     roles.forEach((role: any) => {
       items.push(
         <div key={role.uid}
