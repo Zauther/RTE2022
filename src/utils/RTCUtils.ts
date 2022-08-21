@@ -89,7 +89,7 @@ export function getRTCToken(channelName: string) {
     return new Promise<string>((reslove, reject) => {
         axios({
             method: 'get',
-            url: 'https://cwiki.cn:8080/rtcToken',
+            url: 'https://cwiki.cn/rtcToken',
             responseType: 'json',
             params: {
                 channelName: channelName
