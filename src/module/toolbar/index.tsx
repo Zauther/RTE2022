@@ -152,10 +152,11 @@ export default function Toolbar(props: any) {
   const clickItem = (e: any, type: string, data: any, context: GlobalContext) => {
     // 防止事件捕获触发click调用
     e.stopPropagation();
-    // console.log(type, " ======== type", data, " ======== data", context.currentUser.isAdmin)
+
     if (type === "media") {
       context.fastboardApp?.insertMedia("mic", data.src);
     } else {
+      // 发送显示线索卡事件
       let windowData: any = {
         show: true,
         type: TYPES.CLUE,
@@ -164,7 +165,7 @@ export default function Toolbar(props: any) {
       if (innerShowWindow.id === 2 && data.name === innerShowWindow.name) {
         event.emit('window', {
           ...windowData,
-          isAdmin: context?.isAdmin || false,
+          isAdmin: context?.currentUser?.isAdmin || false,
           show: !innerShowWindow.show
         });
         setInnerShowWindow({
@@ -175,7 +176,7 @@ export default function Toolbar(props: any) {
       } else {
         event.emit('window', {
           ...windowData,
-          isAdmin: context?.isAdmin || false,
+          isAdmin: context?.currentUser?.isAdmin || false,
           show: true
         });
         setInnerShowWindow({
@@ -188,7 +189,6 @@ export default function Toolbar(props: any) {
   }
 
   const copyRoomLink = (context: GlobalContext,ind:number) => {
-
     if(ind==0){
       let url = new URL(window.location.href);
       url.searchParams.delete("uid");

@@ -40,7 +40,7 @@ export default function Roles(props: any) {
         return;
       }
     }
-    
+
     if (roleId && id !== roleId) {
       console.error("这不是你所选的角色，不能操作!")
       return;
@@ -78,7 +78,7 @@ export default function Roles(props: any) {
     roles.forEach((role: any) => {
       items.push(
         <div key={role.uid}
-          className={`role-item ${role.choosed ? 'role-item-choosed' : 'role-item-not-choosed'} ${role.choosed && isTalk ? 'sound-wave' : ''}`}
+          className={`role-item ${role.choosed ? 'role-item-choosed' : 'role-item-not-choosed'} ${role.choosed && isTalk ? 'sound-wave' : ''} ${role.id === context?.currentUser?.roleId ? "is-my-role" : "" }`}
           style={{ backgroundImage: "url('" + role.image + "')" }}
           onClick={() => itemClick(rtcClient, +role.id, context)}>
         </div>
