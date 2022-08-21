@@ -30,9 +30,17 @@ export default function Roles(props: any) {
       channel: CHANNEL_NAME,
       uid: "0",
     }
-    if (!roleId) {
+    const curUser = context?.currentUser;
+    if (!curUser?.roleId) {
       setRoleId(id);
+    } else {
+      setRoleId(curUser?.roleId);
+      if (curUser?.roleId && curUser?.roleId !== id) {
+        console.error("你已经选择角色，不可再操作其他角色！")
+        return;
+      }
     }
+
     if (roleId && id !== roleId) {
       console.error("这不是你所选的角色，不能操作!")
       return;
@@ -70,7 +78,7 @@ export default function Roles(props: any) {
     roles.forEach((role: any) => {
       items.push(
         <div key={role.uid}
-          className={`role-item ${role.choosed ? 'role-item-choosed' : 'role-item-not-choosed'} ${role.choosed && isTalk ? 'sound-wave' : ''}`}
+          className={`role-item ${role.choosed ? 'role-item-choosed' : 'role-item-not-choosed'} ${role.choosed && isTalk ? 'sound-wave' : ''} ${role.id === context?.currentUser?.roleId ? "is-my-role" : "" }`}
           style={{ backgroundImage: "url('" + role.image + "')" }}
           onClick={() => itemClick(rtcClient, +role.id, context)}>
         </div>

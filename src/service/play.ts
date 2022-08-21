@@ -38,14 +38,14 @@ class Play {
           id: 2,
           name: "袁本",
           image: 'https://p0.meituan.net/roleplay/f4198ca37f6af080d6bc0f3ddae1f872530181281.png',
-          play: 'https://cwiki.cn/downloads/%E5%B9%B4%E8%BD%AE/%E5%89%A7%E6%9C%AC/%E7%8E%8B%E5%B0%8F%E5%86%89.PDF',
+          play: 'https://cwiki.cn/downloads/%E5%B9%B4%E8%BD%AE/%E5%89%A7%E6%9C%AC/%E8%A2%81%E6%9C%AC.PDF',
           choosed: false,
         },
         {
           id: 3,
           name: "王小冉",
           image: 'https://p0.meituan.net/roleplay/500051c98d58c5ec3d5d0a4ccac8655e530668143.png',
-          play: 'https://cwiki.cn/downloads/%E5%B9%B4%E8%BD%AE/%E5%89%A7%E6%9C%AC/%E8%A2%81%E6%9C%AC.PDF',
+          play: 'https://cwiki.cn/downloads/%E5%B9%B4%E8%BD%AE/%E5%89%A7%E6%9C%AC/%E7%8E%8B%E5%B0%8F%E5%86%89.PDF',
           choosed: false,
         },
         {
