@@ -227,7 +227,7 @@ export default function Toolbar(props: any) {
                 <div key={index}
                   className="toolbar-item"
                   style={{ background: `no-repeat center/60% url(${item.icon})` }}
-                  onClick={() => click(item.id, value)}
+                  onClick={() => click(value,item.id)}
                 >
                   {
                     item.list && item.showBubble ? <div className="toolbar-item-bubble">
