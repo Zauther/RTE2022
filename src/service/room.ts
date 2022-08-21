@@ -32,6 +32,12 @@ const default_lifespan = 3600 * 12;
 
 
 
+export declare interface ThwjResopnse<T> {
+  errno: number
+  errmsg: string,
+  data: T
+}
+
 export declare interface RoomRolesInfo {
   id: string,
   uid: string,
@@ -164,16 +170,17 @@ class Room {
   }
 
   queryRolesByRoomId(roomId: string) {
-    return new Promise<RoomInfo>((reslove, reject) => {
+    return new Promise<Array<RoomRolesInfo>>((reslove, reject) => {
       roomManagerRequest({
         method: 'get',
         url: '/playroom/roles',
-        params:{
+        params: {
           roomId: roomId,
         }
-      
+
       }).then(function (response: any) {
-        reslove(response.data);
+        const res = response.data as ThwjResopnse<Array<RoomRolesInfo>>;
+        reslove(res.data);
       });
     });
   }

@@ -1,12 +1,15 @@
+import { Fastboard } from "@netless/fastboard-react";
 import React from "react";
-import { Fastboard, FastboardApp } from "@netless/fastboard-react";
 import { get_uid } from "../../utils/common";
+import { FastboardAndRoom, useFastboard } from "./fastboardutils";
 import "./index.less";
-import { useFastboard } from "./fastboardutils";
 
 export default function Board(props: any) {
-  let app: FastboardApp | null = null;
-  
+
+  const { updateFastboardAndRoom } = props;
+
+  let app: FastboardAndRoom | null = null;
+
   if (props.uuid && props.roomToken) {
     app = useFastboard(() => ({
       sdkConfig: {
@@ -19,10 +22,32 @@ export default function Board(props: any) {
         roomToken: props.roomToken
       },
     }));
-    window.fastboardApp = app;
+    if (app) {
+      updateFastboardAndRoom(app);
+    }
+
+    // window.fastboardApp = app?.fastboardApp;
+
+
+    // if (app && app.room) {
+
+    //   RoomManager.queryRolesByRoomId(app?.room.uuid as string).then((roomRolesInfos: Array<RoomRolesInfo>) => {
+    //     console.log(`===queryRolesByRoomId===${JSON.stringify(roomRolesInfos)}`)
+    //     // for(let roomRolesInfo in roomRolesInfos){
+    //     //   let user = new User(roomRolesInfo.uid,"","","",roomRolesInfo.isRoomAdmin);
+    //     //   window.userManager.setUser(user);
+
+    //     // }
+    //     updateRoomRolesInfoList(roomRolesInfos);
+    //     // updateUserManager();
+    //   })
+
+    // }
+
+
   }
 
   return (
-    app ? <div className="board"><Fastboard app={app} /></div> : null
+    app ? <div className="board"><Fastboard app={app.fastboardApp} /></div> : null
   );
 }

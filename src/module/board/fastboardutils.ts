@@ -1,13 +1,11 @@
-import { Fastboard, FastboardApp, FastboardOptions } from "@netless/fastboard-react";
+import { FastboardApp, FastboardOptions } from "@netless/fastboard-react";
 import { WindowManager } from "@netless/window-manager";
-import React, { useEffect, useRef, useState } from "react";
-import { contentModeScale, DefaultHotKeys, JoinRoomParams, ReplayRoomParams, WhiteWebSdk } from "white-web-sdk";
+import { useEffect, useRef, useState } from "react";
+import { contentModeScale, DefaultHotKeys, JoinRoomParams, ReplayRoomParams, Room, WhiteWebSdk } from "white-web-sdk";
 
 import { SyncedStorePlugin } from "@netless/synced-store";
-import { get_uid } from "../../utils/common";
-import { User } from "../../users/UserManager";
 import { addUserInfoListener, dispatchUserInfo } from "../../events/EventsManager";
-import Room from "../../service/room"
+import { User } from "../../users/UserManager";
 
 
 const register = WindowManager.register.bind(WindowManager);
@@ -20,18 +18,27 @@ function ensure_official_plugins<T extends JoinRoomParams | ReplayRoomParams>(jo
   return joinRoom;
 }
 
-export function useFastboard(config: () => FastboardOptions): FastboardApp | null {
+
+export declare interface FastboardAndRoom {
+  fastboardApp: FastboardApp,
+  room: Room
+}
+
+export function useFastboard(config: () => FastboardOptions): FastboardAndRoom | null {
   const unmountRef = useRef(false);
   const [fastboard, setFastboard] = useState<FastboardApp | null>(null);
+
+  const [fastboardAndRoom, setFastboardAndRoom] = useState<FastboardAndRoom | null>(null);
 
   useEffect(() => {
     let fastboard: FastboardApp | null = null;
 
     createFastboard(config()).then(app => {
       if (!unmountRef.current) {
-        setFastboard((fastboard = app));
+        setFastboard((fastboard = app.fastboardApp));
+        setFastboardAndRoom(app);
       } else {
-        app.destroy();
+        app.fastboardApp.destroy();
       }
     });
 
@@ -42,7 +49,7 @@ export function useFastboard(config: () => FastboardOptions): FastboardApp | nul
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return fastboard;
+  return fastboardAndRoom;
 }
 
 export async function createFastboard<TEventData = any>({
@@ -90,7 +97,7 @@ export async function createFastboard<TEventData = any>({
 
   window.room = room;
 
-  room.addMagixEventListener("currentUser",(msd)=>{
+  room.addMagixEventListener("currentUser", (msd) => {
     console.log(`========${JSON.stringify(msd)}=========`);
   });
 
@@ -108,9 +115,9 @@ export async function createFastboard<TEventData = any>({
     dispatchUserInfo(currentUser);
     //先查询
     // Room.queryRoles()
-  
+
   }
-// admin 信息
+  // admin 信息
   if (window?.userManager?.isAdmin) {
     const currentUser = new User(window.room.uid as string, "", "", false);
     window.userManager.currentUser = currentUser;
@@ -120,7 +127,7 @@ export async function createFastboard<TEventData = any>({
 
 
 
-  
+
 
   const syncedStore = await SyncedStorePlugin.init<TEventData>(room);
 
@@ -135,5 +142,10 @@ export async function createFastboard<TEventData = any>({
     maxContentMode: contentModeScale(3),
   });
 
-  return new FastboardApp<TEventData>(sdk, room, manager, hotKeys, syncedStore);
+  return {
+    fastboardApp: new FastboardApp<TEventData>(sdk, room, manager, hotKeys, syncedStore),
+    room: room
+  }
+
+  // return ;
 }

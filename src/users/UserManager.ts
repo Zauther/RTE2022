@@ -36,12 +36,14 @@ export class User {
     userName: string | undefined;
     roomUserId: string | undefined;
     rtcUserId: string | undefined;
+    roleId: string | undefined;
 
-    constructor(roomUserId: string, userName: string, rtcUserId: string, isAdmin?: boolean | false) {
+    constructor(roomUserId: string, userName: string, rtcUserId: string, roleId: string, isAdmin?: boolean | false) {
         this.roomUserId = roomUserId;
         this.userName = userName;
         this.rtcUserId = rtcUserId;
         this.isAdmin = isAdmin;
+        this.roleId = roleId;
     }
 
     equals(u: User): boolean {
@@ -55,6 +57,8 @@ export class User {
     update(u: User) {
         this.userName = u.userName;
         this.roomUserId = u.roomUserId;
+        this.isAdmin = u.isAdmin;
+        this.roleId = u.roleId;
     }
 
     toJson() {
