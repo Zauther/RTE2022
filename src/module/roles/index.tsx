@@ -85,6 +85,7 @@ export default function Roles(props: any) {
       <MyContext.Consumer>
         {
           value => {
+            console.log("context value ========= ", value)
             return renderRoles(value)
           }
         }

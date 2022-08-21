@@ -14,12 +14,13 @@ export default function Window(props: any) {
   const [selectAll, setSelectAll] = useState<boolean>(false);
 
   useEffect(() => {
-    addCluesListener().then((res: any) => {
-      console.log("CluesListener ======= ", res)
-    })
+    // addCluesListener().then((res: any) => {
+    //   console.log("CluesListener ======= ", res)
+    // })
 
     event.on("window", ((res: any) => {
-      if (res?.isAdmin) {
+      console.log("window ======= ", res)
+      if (res?.isAdmin && res?.type === TYPES.CLUE) {
         setData({
           ...res,
           data: (res?.data || []).map((r: any) => {
@@ -29,6 +30,8 @@ export default function Window(props: any) {
             }
           })
         })
+      } else if (res?.type === TYPES.PLAY) {
+        setData(res);
       }
     }))
   }, [])

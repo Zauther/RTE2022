@@ -40,17 +40,6 @@ export default function Toolbar(props: any) {
         ]
       },
       {
-        id: 1,
-        icon: PlayIcon,
-        showBubble: false,
-      },
-      {
-        id: 2,
-        icon: ClueIcon,
-        showBubble: false,
-        list: plays.clues
-      },
-      {
         id: 3,
         icon: VoiceIcon,
         showBubble: false,
@@ -62,6 +51,17 @@ export default function Toolbar(props: any) {
         showBubble: false,
         list: plays.videos
       },
+      {
+        id: 1,
+        icon: PlayIcon,
+        showBubble: false,
+      },
+      {
+        id: 2,
+        icon: ClueIcon,
+        showBubble: false,
+        list: plays.clues
+      }
     ])
   }, [])
 
@@ -221,7 +221,7 @@ export default function Toolbar(props: any) {
       <MyContext.Consumer>
         {
           value => {
-            const list = value.isAdmin ? items : items.slice(1);
+            const list = value.isAdmin ? items : items.slice(3);
             return list.map((item, index) => {
               return (
                 <div key={index}
