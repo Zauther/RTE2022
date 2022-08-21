@@ -1,4 +1,11 @@
+import axios from "axios";
 import request from "../utils/request";
+
+
+const roomManagerRequest = axios.create({
+  baseURL: 'https://admin.thwj.tejiayun.com/',
+  timeout: 2000,
+});
 
 export declare interface RoomInfo {
   uuid: string, // room 的uuid
@@ -22,6 +29,16 @@ export const Role = {
 }
 
 const default_lifespan = 3600 * 12;
+
+
+
+export declare interface RoomRolesInfo {
+  id: string,
+  uid: string,
+  roomId: string,
+  roleId: string
+  isRoomAdmin: boolean
+}
 
 /*
 role:string="admin|writer|reader"
@@ -54,7 +71,7 @@ class Room {
       this.getSDKToken(role).then((sdkToken) => {
         this.createRoomWithToken(sdkToken).then((roomInfo) => {
           const uuid = roomInfo.uuid;
-          this.getRoomToken(uuid, sdkToken,role).then((roomToken) => {
+          this.getRoomToken(uuid, sdkToken, role).then((roomToken) => {
             reslove({ uuid: uuid, roomToken: roomToken });
           });
         })
@@ -65,7 +82,7 @@ class Room {
   joinRoom(role: string, uuid: string) {
     return new Promise<RoomParam>((reslove, reject) => {
       this.getSDKToken(role).then((sdkToken) => {
-        this.getRoomToken(uuid, sdkToken,role).then((roomToken) => {
+        this.getRoomToken(uuid, sdkToken, role).then((roomToken) => {
           reslove({ uuid: uuid, roomToken: roomToken });
         });
       })
@@ -87,7 +104,7 @@ class Room {
           "region": "cn-hz"
         }
       }).then(function (response: any) {
-          reslove(response.data);
+        reslove(response.data);
       });
     });
   }
@@ -107,7 +124,7 @@ class Room {
           "region": "cn-hz"
         }
       }).then(function (response: any) {
-          reslove(response.data);
+        reslove(response.data);
       });
     });
   }
@@ -128,6 +145,39 @@ class Room {
       });
     });
   }
+
+  bindRole(uid: string, roleId: string, roomId: string, isRoomAdmin: string) {
+    return new Promise<RoomInfo>((reslove, reject) => {
+      let data = new FormData();
+      data.append('uid', uid);
+      data.append('roleId', roleId);
+      data.append('roomId', roomId);
+      data.append('isRoomAdmin', isRoomAdmin);
+      roomManagerRequest({
+        method: 'post',
+        url: '/playroom/bindRole',
+        data: data
+      }).then(function (response: any) {
+        reslove(response.data);
+      });
+    });
+  }
+
+  queryRolesByRoomId(roomId: string) {
+    return new Promise<RoomInfo>((reslove, reject) => {
+      roomManagerRequest({
+        method: 'get',
+        url: '/playroom/roles',
+        params:{
+          roomId: roomId,
+        }
+      
+      }).then(function (response: any) {
+        reslove(response.data);
+      });
+    });
+  }
 }
+
 
 export default new Room();
