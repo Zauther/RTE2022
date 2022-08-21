@@ -93,7 +93,7 @@ export async function createFastboard<TEventData = any>({
     callbacks
   );
 
-  window.room = room;
+  // window.room = room;
 
   room.addMagixEventListener("currentUser", (msd) => {
     console.log('========room currentUser=========', msd);
