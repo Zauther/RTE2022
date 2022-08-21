@@ -72,6 +72,14 @@ function App() {
                   roomToken: res.roomToken
                 });
               });
+              
+              let user = globalContext.currentUser;
+              if (user == undefined) {
+                user = new User(ri.uid, "", "", +ri.roleId, ri.isRoomAdmin);
+              }
+              globalContext.currentUser = user;
+              globalContext.isAdmin = ri.isRoomAdmin;
+              setGlobalContext(globalContext);
             }
           })
         })
