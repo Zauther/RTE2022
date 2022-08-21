@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { event } from "../../index";
 import Play from "../play/play";
-import { addCluesListener, dispatchClues } from "../../events/EventsManager";
+// import { addCluesListener, dispatchClues } from "../../events/EventsManager";
 import "./index.less";
 
 export const TYPES = {
@@ -15,9 +15,9 @@ export default function Window(props: any) {
 
   // 更新window显示内容
   useEffect(() => {
-    addCluesListener().then((res: any) => {
-      console.log("CluesListener ======= ", res)
-    })
+    // addCluesListener().then((res: any) => {
+    //   console.log("CluesListener ======= ", res)
+    // })
 
     event.on("window", ((res: any) => {
       console.log("window ======= ", res)
@@ -65,7 +65,7 @@ export default function Window(props: any) {
   useEffect(() => {
     if (data?.isAdmin && data?.type === TYPES.CLUE) {
       const clues = (data?.data || []).filter((clue: any) => clue.checked);
-      dispatchClues(clues);
+      // dispatchClues(clues);
     }
   }, [data])
 

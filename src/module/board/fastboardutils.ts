@@ -4,8 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { contentModeScale, DefaultHotKeys, JoinRoomParams, ReplayRoomParams, Room, WhiteWebSdk } from "white-web-sdk";
 
 import { SyncedStorePlugin } from "@netless/synced-store";
-import { addUserInfoListener, dispatchUserInfo } from "../../events/EventsManager";
-import { User } from "../../users/UserManager";
 
 
 const register = WindowManager.register.bind(WindowManager);
@@ -95,35 +93,35 @@ export async function createFastboard<TEventData = any>({
     callbacks
   );
 
-  window.room = room;
+  // window.room = room;
 
   room.addMagixEventListener("currentUser", (msd) => {
     console.log('========room currentUser=========', msd);
   });
 
-  addUserInfoListener();
+  // addUserInfoListener();
 
   // room 创建成功，保存信息
   // 拉取信息
 
 
-  // player 信息
-  if (!window?.userManager?.isAdmin) {
-    const currentUser = new User(window.room.uid as string, "", "", false);
-    window.userManager.currentUser = currentUser;
-    window.userManager.setUser(currentUser);
-    dispatchUserInfo(currentUser);
-    //先查询
-    // Room.queryRoles()
+  // // player 信息
+  // if (!window?.userManager?.isAdmin) {
+  //   const currentUser = new User(window.room.uid as string, "", "", false);
+  //   window.userManager.currentUser = currentUser;
+  //   window.userManager.setUser(currentUser);
+  //   dispatchUserInfo(currentUser);
+  //   //先查询
+  //   // Room.queryRoles()
 
-  }
-  // admin 信息
-  if (window?.userManager?.isAdmin) {
-    const currentUser = new User(window.room.uid as string, "", "", false);
-    window.userManager.currentUser = currentUser;
-    window.userManager.setUser(currentUser);
-    dispatchUserInfo(currentUser);
-  }
+  // }
+  // // admin 信息
+  // if (window?.userManager?.isAdmin) {
+  //   const currentUser = new User(window.room.uid as string, "", "", false);
+  //   window.userManager.currentUser = currentUser;
+  //   window.userManager.setUser(currentUser);
+  //   dispatchUserInfo(currentUser);
+  // }
 
 
 
