@@ -170,6 +170,7 @@ export default function Toolbar(props: any) {
         {
           value => {
             const list = value.isAdmin ? items : items.slice(2);
+            console.log(`====MyContext=====${JSON.stringify(value)}`)
             return list.map((item, index) => {
               return (
                 <div key={index}

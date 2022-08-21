@@ -40,14 +40,14 @@ export default function Roles(props: any) {
 
 
     const rs = roles.map((r: any) => {
-      const roomUserId = getCurrentRoomUID();
+      const roomUserId = context.currentUser?.roomUserId;
       const userName = "haha";
 
       if (r.id === id) {
         if (r.choosed) {
           leave(rtcClient, audioTrack);
           const user = new User(
-            roomUserId,
+            `${roomUserId}`,
             userName,
             "", // rtcUserId
             id, // roleId
@@ -60,7 +60,7 @@ export default function Roles(props: any) {
             if (!context?.currentUser?.roleId) {
               const rtcUserId = option?.uid;
               const user = new User(
-                roomUserId,
+                `${roomUserId}`,
                 userName,
                 rtcUserId, // rtcUserId
                 id, // roleId

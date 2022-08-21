@@ -84,7 +84,7 @@ function App() {
           })
         })
       }
-      console.log(`=====room uid======${JSON.stringify(uid)}`);
+      console.log(`=====room uid======${JSON.stringify(globalContext) }`);
     }
   }, [])
 
