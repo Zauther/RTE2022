@@ -25,9 +25,11 @@ export default function Board(props: any) {
     if (app) {
       updateFastboardAndRoom(app);
     }
-
-    // window.fastboardApp = app?.fastboardApp;
-
+    if(app){
+      window.fastboardApp = app.fastboardApp;
+      window.room = app.room;
+    }
+   
 
     // if (app && app.room) {
 
