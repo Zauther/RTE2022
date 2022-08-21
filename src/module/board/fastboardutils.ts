@@ -97,6 +97,9 @@ export async function createFastboard<TEventData = any>({
   addUserInfoListener();
 
   // room 创建成功，保存信息
+  // 拉取信息
+
+
   // player 信息
   if (!window?.userManager?.isAdmin) {
     const currentUser = new User(window.room.uid as string, "", "", false);
@@ -113,7 +116,6 @@ export async function createFastboard<TEventData = any>({
     window.userManager.currentUser = currentUser;
     window.userManager.setUser(currentUser);
     dispatchUserInfo(currentUser);
-    
   }
 
 

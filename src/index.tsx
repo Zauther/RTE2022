@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     window.userManager = new UserManager();
-    if (!/uuid/.test(window.location.search)) { // 如果没有uuid则生成一个作为房间
+    if (!/roomId/.test(window.location.search)) { // 如果没有uuid则生成一个作为房间
       Room.createRoom(Role.Admin).then((res: any) => {
         setRoomId(res.uuid);
         setOptions({
