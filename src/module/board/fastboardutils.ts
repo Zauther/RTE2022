@@ -7,6 +7,8 @@ import { SyncedStorePlugin } from "@netless/synced-store";
 import { get_uid } from "../../utils/common";
 import { User } from "../../users/UserManager";
 import { addUserInfoListener, dispatchUserInfo } from "../../events/EventsManager";
+import Room from "../../service/room"
+
 
 const register = WindowManager.register.bind(WindowManager);
 
@@ -94,12 +96,27 @@ export async function createFastboard<TEventData = any>({
 
   addUserInfoListener();
 
+  // room 创建成功，保存信息
+  // player 信息
   if (!window?.userManager?.isAdmin) {
     const currentUser = new User(window.room.uid as string, "", "", false);
     window.userManager.currentUser = currentUser;
     window.userManager.setUser(currentUser);
     dispatchUserInfo(currentUser);
+    //先查询
+    // Room.queryRoles()
+  
   }
+// admin 信息
+  if (window?.userManager?.isAdmin) {
+    const currentUser = new User(window.room.uid as string, "", "", false);
+    window.userManager.currentUser = currentUser;
+    window.userManager.setUser(currentUser);
+    dispatchUserInfo(currentUser);
+    
+  }
+
+
 
   
 

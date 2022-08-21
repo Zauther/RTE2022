@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
 import { IAgoraRTCClient, IMicrophoneAudioTrack } from "agora-rtc-sdk-ng";
-import "./index.less"
+import React, { useCallback, useEffect, useState } from "react";
 import Play from "../../service/play";
 import { getRtcClient, join, leave } from "../../utils/RTCUtils";
+import "./index.less";
 
 const APP_ID = "16cca950aca74708a9c3f1e2b7f2e655";
 const APP_CERTIFICATE = "3a224adcf8e24a808a6906179379221b";
 const CHANNEL_NAME = "rte2022";
 let audioTrack: IMicrophoneAudioTrack | null | undefined = null;
 let isTalk: boolean = false;
+
+import RoomManager from "../../service/room";
 
 export default function Roles(props: any) {
   const [roles, setRoles] = useState([]);
@@ -33,6 +35,9 @@ export default function Roles(props: any) {
       return;
     }
 
+    RoomManager.bindRole(window.room.uid as string, `${roleId}`, window.room.uuid, window.userManager.isAdmin?"1":"0").then((response) => {
+      console.log(`=====RoomManager bindRole====${response}`);
+    });
     const rs = roles.map((r: any) => {
       if (r.id === id) {
         if (r.choosed) {
@@ -59,14 +64,14 @@ export default function Roles(props: any) {
 
     roles.forEach((role: any) => {
       items.push(
-        <div key={role.uid} 
+        <div key={role.uid}
           className={`role-item ${role.choosed ? 'role-item-choosed' : 'role-item-not-choosed'} ${role.choosed && isTalk ? 'sound-wave' : ''}`}
-          style={{ backgroundImage: "url('" + role.image + "')"}}
+          style={{ backgroundImage: "url('" + role.image + "')" }}
           onClick={() => itemClick(rtcClient, +role.id)}>
         </div>
       );
     })
-    
+
     return items;
   }, [roles]);
 
