@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { event } from "../../index";
+import { event, MyContext } from "../../index";
 import Play from "../play/play";
-// import { addCluesListener, dispatchClues } from "../../events/EventsManager";
 import "./index.less";
+import { search_parse } from "../../utils/common";
 
 export const TYPES = {
   PLAY: 1, // 剧本
@@ -18,11 +18,14 @@ export default function Window(props: any) {
     event.on("room", (room: any) => {
       room.addMagixEventListener("sendClues", (res: any) => {
         const { payload } = res;
-        console.log("listen to sendClues: ", payload)
-        if (!payload?.isAdmin) {
+        const search_obj = search_parse();
+        const uid = search_obj['uid'];
+        if (payload?.roomUserId !== uid) {
           setData({
-            ...data,
-            ...payload
+            show: true,
+            isAdmin: false,
+            type: TYPES.CLUE,
+            data: (payload?.data || [])
           })
         }
       });
@@ -52,9 +55,9 @@ export default function Window(props: any) {
     }))
   }, [])
 
-  // 全选更新data
-  useEffect(() => {
-    if (selectAll) {
+  const selectAllClues = (context: any) => {
+    setSelectAll(!selectAll)
+    if (!selectAll) {
       setData({
         ...data,
         data: (data?.data || []).map((r: any) => {
@@ -64,6 +67,7 @@ export default function Window(props: any) {
           }
         })
       })
+      sendClues(data?.data || [], context);
     } else {
       setData({
         ...data,
@@ -74,20 +78,11 @@ export default function Window(props: any) {
           }
         })
       })
+      sendClues([], context);
     }
-  }, [selectAll])
+  }
 
-  useEffect(() => {
-    if (data?.isAdmin && data?.type === TYPES.CLUE) {
-      const clues = (data?.data || []).filter((clue: any) => clue.checked);
-      window.room.dispatchMagixEvent("sendClues", {
-        isAdmin: false,
-        data: clues
-      });
-    }
-  }, [data])
-
-  const shareClue = (clue: any) => {
+  const shareClue = (clue: any, context: any) => {
     if (data?.isAdmin) {
       // 设置勾选状态
       setData({
@@ -103,38 +98,55 @@ export default function Window(props: any) {
           }
         })
       })
+      
+      const clues = (data?.data || []).filter((c: any) => c.checked || c.name === clue.name);
+      console.log("shareClue ======= ", clues, context)
+      sendClues(clues, context);
     }
-    
+  }
+
+  const sendClues = (clues: any, context: any) => {
+    const search_obj = search_parse();
+    const uid = search_obj['uid'];
+    window.room.dispatchMagixEvent("sendClues", {
+      roomUserId: uid,
+      data: clues
+    });
   }
   
   return (
     data?.show && data?.type ? <div className="window">
-      {
-        data.type === TYPES.PLAY ? <Play url={data?.data || ""} /> : <div>
-          {
-            data?.isAdmin ? 
-              <>
-                <span className={`check-box ${selectAll ? 'check-box-checked' : ''}`} onClick={() => setSelectAll(!selectAll)}></span>
-                <span>全选</span>
-              </> : null
+      <MyContext.Consumer>
+        {
+          value => {
+            return data.type === TYPES.PLAY ? <Play url={data?.data || ""} /> : <div>
+              {
+                data?.isAdmin ? 
+                  <>
+                    <span className={`check-box ${selectAll ? 'check-box-checked' : ''}`} onClick={() => selectAllClues(value)}></span>
+                    <span>全选</span>
+                  </> : null
+              }
+              {
+                (data?.data || []).map((item: any, index: number) => {
+                  return (
+                    <div key={index}>
+                      <img className="clue" src={item.src} />
+                      <div className="info">
+                        {
+                          data?.isAdmin ? <span className={`check-box ${item.checked ? 'check-box-checked' : ''}`} onClick={() => shareClue(item, value)}></span> : null
+                        }
+                        <span>{item.name}</span>
+                      </div>
+                    </div>
+                  )
+                })
+              }
+            </div>
           }
-          {
-            (data?.data || []).map((item: any, index: number) => {
-              return (
-                <div key={index}>
-                  <img className="clue" src={item.src} />
-                  <div className="info">
-                    {
-                      data?.isAdmin ? <span className={`check-box ${item.checked ? 'check-box-checked' : ''}`} onClick={() => shareClue(item)}></span> : null
-                    }
-                    <span>{item.name}</span>
-                  </div>
-                </div>
-              )
-            })
-          }
-        </div>
-      }
+        }
+      
+      </MyContext.Consumer>
     </div> : null
   )
 }
