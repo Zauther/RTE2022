@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { contentModeScale, DefaultHotKeys, JoinRoomParams, ReplayRoomParams, Room, WhiteWebSdk } from "white-web-sdk";
 
 import { SyncedStorePlugin } from "@netless/synced-store";
+import { event } from "../../index";
 
 
 const register = WindowManager.register.bind(WindowManager);
@@ -94,7 +95,7 @@ export async function createFastboard<TEventData = any>({
   );
 
   window.room = room;
-
+  event.emit("room", room);
   room.addMagixEventListener("currentUser", (msd) => {
     console.log('========room currentUser=========', msd);
   });

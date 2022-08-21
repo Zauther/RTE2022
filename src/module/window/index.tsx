@@ -15,13 +15,15 @@ export default function Window(props: any) {
 
   // 更新window显示内容
   useEffect(() => {
-    window.room.addMagixEventListener("sendClues", (clueData: any) => {
-      if (!data.isAdmin) {
-        setData({
-          ...data,
-          ...clueData
-        })
-      }
+    event.on("window", (room: any) => {
+      room.addMagixEventListener("sendClues", (clueData: any) => {
+        if (!data.isAdmin) {
+          setData({
+            ...data,
+            ...clueData
+          })
+        }
+      });
     });
 
     event.on("window", ((res: any) => {
