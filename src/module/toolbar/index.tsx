@@ -165,7 +165,7 @@ export default function Toolbar(props: any) {
       if (innerShowWindow.id === 2 && data.name === innerShowWindow.name) {
         event.emit('window', {
           ...windowData,
-          isAdmin: context?.currentUser?.isAdmin || false,
+          isAdmin: context?.isAdmin || false,
           show: !innerShowWindow.show
         });
         setInnerShowWindow({
@@ -176,7 +176,7 @@ export default function Toolbar(props: any) {
       } else {
         event.emit('window', {
           ...windowData,
-          isAdmin: context?.currentUser?.isAdmin || false,
+          isAdmin: context?.isAdmin || false,
           show: true
         });
         setInnerShowWindow({
