@@ -19,7 +19,7 @@ export default function Window(props: any) {
     })
 
     event.on("window", ((res: any) => {
-      if (res.isAdmin) {
+      if (res?.isAdmin) {
         setData({
           ...res,
           data: (res?.data || []).map((r: any) => {
@@ -58,7 +58,7 @@ export default function Window(props: any) {
   }, [selectAll])
 
   const shareClue = (clue: any) => {
-    if (data.isAdmin) {
+    if (data?.isAdmin) {
       // 设置勾选状态
       setData({
         ...data,

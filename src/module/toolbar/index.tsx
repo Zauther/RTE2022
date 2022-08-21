@@ -127,7 +127,7 @@ export default function Toolbar(props: any) {
   const clickItem = (e: any, type: string, data: any, context: any) => {
     // 防止事件捕获触发click调用
     e.stopPropagation();
-    console.log(type, " ======== type", data, " ======== data", context.currentUser.isAdmin)
+    // console.log(type, " ======== type", data, " ======== data", context.currentUser.isAdmin)
     if (type === "media") {
       window?.fastboardApp?.insertMedia("mic", data.src);
     } else {
