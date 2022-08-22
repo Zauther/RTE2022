@@ -27,7 +27,8 @@ export default function Roles(props: any) {
   const itemClick = (rtcClient: IAgoraRTCClient, id: number, context: GlobalContext) => {
     const option = {
       appid: APP_ID,
-      channel: CHANNEL_NAME,
+      // channel: CHANNEL_NAME,
+      channel: context.room?.uuid,
       uid: "0",
     }
     const curUser = context?.currentUser;
