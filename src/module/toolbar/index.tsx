@@ -94,6 +94,7 @@ export default function Toolbar(props: any) {
     }
 
     if (itemId === 1) {
+      console.log(`[rte2022] show play, currentUser: `, value?.currentUser)
       let windowData: any = {
         show: true,
         type: TYPES.PLAY,
@@ -188,8 +189,8 @@ export default function Toolbar(props: any) {
     }
   }
 
-  const copyRoomLink = (context: GlobalContext,ind:number) => {
-    if(ind==0){
+  const copyRoomLink = (context: GlobalContext, ind: number) => {
+    if (ind == 0) {
       let url = new URL(window.location.href);
       url.searchParams.delete("uid");
       url.searchParams.delete("roomId");
@@ -198,11 +199,11 @@ export default function Toolbar(props: any) {
       return;
     }
 
-    items[0].list.slice(1).forEach((u)=>{
-      const player:User[]= context.players.filter((player)=>{
+    items[0].list.slice(1).forEach((u) => {
+      const player: User[] = context.players.filter((player) => {
         return player.roleId == u.id;
       })
-      if(player.length<=0){
+      if (player.length <= 0) {
         return;
       }
 
@@ -210,10 +211,10 @@ export default function Toolbar(props: any) {
       url.searchParams.delete("uid");
       url.searchParams.delete("roomId");
       url.searchParams.set("roomId", context.room?.uuid as string);
-      url.searchParams.set("uid",`${player[0].roomUserId}`);
+      url.searchParams.set("uid", `${player[0].roomUserId}`);
       clipboard.copy(`${url}`);
     })
-   
+
   }
 
   return (
@@ -227,15 +228,15 @@ export default function Toolbar(props: any) {
                 <div key={index}
                   className="toolbar-item"
                   style={{ background: `no-repeat center/60% url(${item.icon})` }}
-                  onClick={() => click(value,item.id)}
+                  onClick={() => click(value, item.id)}
                 >
                   {
                     item.list && item.showBubble ? <div className="toolbar-item-bubble">
                       {
                         item.list.map((i: any, ind: number) => {
                           return (
-                            <div key={ind} className="toolbar-item-bubble-line" 
-                              onClick={(e) => item.id === 0 ? copyRoomLink(value, ind) : clickItem(e, i?.src ? "media":"clue", i, value)}>
+                            <div key={ind} className="toolbar-item-bubble-line"
+                              onClick={(e) => item.id === 0 ? copyRoomLink(value, ind) : clickItem(e, i?.src ? "media" : "clue", i, value)}>
                               {i.name}
                             </div>)
                         })

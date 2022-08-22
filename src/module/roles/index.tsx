@@ -55,11 +55,12 @@ export default function Roles(props: any) {
           join(rtcClient, option).then((info) => {
             audioTrack = info.audioTrack;
           });
-          console.log("===RoomManager===", context, context?.currentUser)
+          console.log("[rte2022] ===RoomManager===", context, context?.currentUser)
           RoomManager.bindRole(context.room?.uid as string, `${id}`, context.room?.uuid as string, context.isAdmin ? "1" : "0").then((response) => {
-            console.log('=====RoomManager bindRole====', response);
+            console.log('[rte2022] RoomManager bindRole result: ', response);
+          }).finally(()=>{
+            context?.room?.dispatchMagixEvent("updateUserInfo",{});
           });
-          context?.room?.dispatchMagixEvent("updateUserInfo",{});
         }
         return {
           ...r,
@@ -93,7 +94,7 @@ export default function Roles(props: any) {
       <MyContext.Consumer>
         {
           value => {
-            console.log("context value ========= ", value)
+            console.log("[rte2022] role page context value: ", value)
             return renderRoles(value)
           }
         }

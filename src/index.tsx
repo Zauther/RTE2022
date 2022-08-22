@@ -80,6 +80,7 @@ function App() {
               globalContext.currentUser = user;
               globalContext.isAdmin = ri.isRoomAdmin;
               setGlobalContext(globalContext);
+              console.log(`[rte2022] currentUser: ${JSON.stringify(globalContext)}`)
             }
           })
         })
@@ -90,8 +91,9 @@ function App() {
 
 
   const queryRolesByRoomId = (roomId: string, currentUid: string) => {
+    console.log(`[rte2022] queryRolesByRoomId params: ${roomId} ${currentUid}`)
     RoomManager.queryRolesByRoomId(roomId).then((roomRolesInfos: Array<RoomRolesInfo>) => {
-      console.log(`===queryRolesByRoomId===${JSON.stringify(roomRolesInfos)}, currentUid=${currentUid}`)
+      console.log(`[rte2022] queryRolesByRoomId result: ${JSON.stringify(roomRolesInfos)}, currentUid=${currentUid}`)
       roomRolesInfos.forEach((ri) => {
 
         if (ri.uid == currentUid) {
@@ -105,6 +107,7 @@ function App() {
         let user = new User(ri.uid, "", "", +ri.roleId, ri.isRoomAdmin);
         globalContext.setPlayer(user);
         setGlobalContext(globalContext);
+        console.log(`[rte2022] queryRolesByRoomId setGlobalContext: ${JSON.stringify(globalContext)}`)
       })
 
     })
@@ -159,8 +162,8 @@ function App() {
       // }
       history.replaceState({}, "", url);
       globalContext.room.addMagixEventListener("updateUserInfo", () => {
-        console.log("updateUserInfo");
-        queryRolesByRoomId(globalContext.room?.uuid as string, globalContext.currentUser?.roomUserId as string);
+        console.log("[rte2022] receive updateUserInfo event");
+        queryRolesByRoomId(globalContext.room?.uuid as string, globalContext.room?.uid as string);
       });
 
     }

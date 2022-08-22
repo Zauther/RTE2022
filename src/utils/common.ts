@@ -34,3 +34,9 @@ export function search_parse() {
   } 
   return resultObj;
 }
+
+export function findUid() {
+  const query = new URLSearchParams(location.search);
+  let uid = query.get("uid");
+  return uid;
+}

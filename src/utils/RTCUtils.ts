@@ -1,6 +1,5 @@
 import AgoraRTC, { IAgoraRTCClient, IAgoraRTCRemoteUser, IMicrophoneAudioTrack, UID } from "agora-rtc-sdk-ng";
 import axios from 'axios';
-import { dispatchSound } from "../events/EventsManager";
 
 /*
  * 使用姿势
@@ -73,6 +72,7 @@ export async function join(client: IAgoraRTCClient, options: Options): Promise<R
         AgoraRTC.createMicrophoneAudioTrack(),
         // AgoraRTC.createCameraVideoTrack()
     ]);
+    console.log(`===user-published=====${options.uid}`)
 
     await client.publish([rtcInfo.audioTrack]);
     console.log("publish success");
