@@ -59,6 +59,7 @@ export default function Roles(props: any) {
           RoomManager.bindRole(context.room?.uid as string, `${id}`, context.room?.uuid as string, context.isAdmin ? "1" : "0").then((response) => {
             console.log('[rte2022] RoomManager bindRole result: ', response);
           }).finally(()=>{
+            console.log('[rte2022] RoomManager bindRole updateUserInfo ');
             context?.room?.dispatchMagixEvent("updateUserInfo",{});
           });
         }

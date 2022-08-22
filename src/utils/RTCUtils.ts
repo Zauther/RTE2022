@@ -42,7 +42,7 @@ export function getRtcClient(): IAgoraRTCClient {
 export async function join(client: IAgoraRTCClient, options: Options): Promise<RTCInfo> {
     client.on("user-published", async (user, mediaType) => {
         const id = user.uid;
-        console.log(`===user-published=====${JSON.stringify(user)}`)
+        console.log(`[rte2022] ===user-published===`,user)
 
         // Subscribe to the remote user when the SDK triggers the "user-published" event
         await client.subscribe(user, mediaType);

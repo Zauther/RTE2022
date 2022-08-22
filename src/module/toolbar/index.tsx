@@ -72,7 +72,7 @@ export default function Toolbar(props: any) {
     let its = [];
 
     if (itemId == 0) {
-      console.log(`==================${JSON.stringify(items[0].list)}`);
+      console.log(`==================`,items[0]?.list);
       let z = items[0].list[0];
       items[0].list = [];
       items[0].list.push(z);

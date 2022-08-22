@@ -80,7 +80,7 @@ function App() {
               globalContext.currentUser = user;
               globalContext.isAdmin = ri.isRoomAdmin;
               setGlobalContext(globalContext);
-              console.log(`[rte2022] currentUser: ${JSON.stringify(globalContext)}`)
+              console.log(`[rte2022] currentUser: `, globalContext)
             }
           })
         })
@@ -93,10 +93,11 @@ function App() {
   const queryRolesByRoomId = (roomId: string, currentUid: string) => {
     console.log(`[rte2022] queryRolesByRoomId params: ${roomId} ${currentUid}`)
     RoomManager.queryRolesByRoomId(roomId).then((roomRolesInfos: Array<RoomRolesInfo>) => {
-      console.log(`[rte2022] queryRolesByRoomId result: ${JSON.stringify(roomRolesInfos)}, currentUid=${currentUid}`)
+      console.log(`[rte2022] queryRolesByRoomId result:`, roomRolesInfos, currentUid)
       roomRolesInfos.forEach((ri) => {
-
+        console.log(`[rte2022] queryRolesByRoomId forEach`, ri)
         if (ri.uid == currentUid) {
+
           let user = globalContext.currentUser;
           if (user == undefined) {
             user = new User(ri.uid, "", "", +ri.roleId, ri.isRoomAdmin);
@@ -107,7 +108,7 @@ function App() {
         let user = new User(ri.uid, "", "", +ri.roleId, ri.isRoomAdmin);
         globalContext.setPlayer(user);
         setGlobalContext(globalContext);
-        console.log(`[rte2022] queryRolesByRoomId setGlobalContext: ${JSON.stringify(globalContext)}`)
+        console.log(`[rte2022] queryRolesByRoomId setGlobalContext: `, globalContext)
       })
 
     })
