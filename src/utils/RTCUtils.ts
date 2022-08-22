@@ -42,16 +42,20 @@ export function getRtcClient(): IAgoraRTCClient {
 
 export async function join(client: IAgoraRTCClient, options: Options): Promise<RTCInfo> {
     client.on("user-published", async (user, mediaType) => {
+        const id = user.uid;
+        console.log(`===user-published=====${JSON.stringify(user)}`)
+
         // Subscribe to the remote user when the SDK triggers the "user-published" event
-        client.subscribe(user, mediaType);
+        await client.subscribe(user, mediaType);
         console.log("subscribe success");
 
         // If the remote user publishes an audio track.
         if (mediaType === "audio") {
             // Get the RemoteAudioTrack object in the AgoraRTCRemoteUser object.
-            const remoteAudioTrack = user.audioTrack;
-            // Play the remote audio track.
-            remoteAudioTrack && remoteAudioTrack.play();
+            // const remoteAudioTrack = user.audioTrack;
+            // // Play the remote audio track.
+            // remoteAudioTrack && remoteAudioTrack.play();
+            user.audioTrack?.play()
         }
     });
     client.on("user-unpublished", async (user) => {
