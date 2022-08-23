@@ -34,9 +34,11 @@ export default function Roles(props: any) {
     event.on("room", (room: any) => {
       room.addMagixEventListener("updateRoles", (res: any) => {
         const { payload } = res;
+        console.log("updateRoles ========= ", payload)
+
         const search_obj = search_parse();
         const uid = search_obj['uid'];
-        if (payload?.roomUserId !== uid && payload?.roles) {
+        if (payload?.roomUserId !== uid && payload?.data) {
           setRoles(payload?.data)
         }
       });
