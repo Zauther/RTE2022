@@ -6,7 +6,7 @@
 
 项目简介：本项目是基于 [community-app-template](https://github.com/netless-io/community-app-template) 模版 React 分支开发的【剧本杀打本工具】
 
-## 快速开始
+## 安装部署指南
 前置条件：至少需要安装了 `git`、`node 16`、`npm 8`
 
 第一步：克隆项目到本地`git clone git@github.com:Zauther/RTE2022.git`
@@ -18,7 +18,7 @@
 第四步：运行项目 `npm start`
 
 
-## 项目功能使用流程
+## 功能简介
  
 - 项目角色：使用项目工具的用户分为【主持人】和【玩家】
 
@@ -60,6 +60,10 @@
 
 【玩家】票选出凶手玩家，【主持人】复盘剧本内容。
 
+
+## 技术栈
+
+React
 ## 可扩展方向 
 
 - 剧本库：可扩展剧本库内容，主持人登陆时可选择不同剧本后创建房间。
