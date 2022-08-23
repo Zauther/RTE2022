@@ -1,10 +1,10 @@
 import { IAgoraRTCClient, IMicrophoneAudioTrack } from "agora-rtc-sdk-ng";
 import React, { useCallback, useEffect, useState } from "react";
 import Play from "../../service/play";
-import { getRtcClient, join, leave } from "../../utils/RTCUtils";
+import { getRtcClient, join, leave, Options } from "../../utils/RTCUtils";
+import { search_parse } from "../../utils/common";
+import { event, MyContext } from "../../index";
 import "./index.less";
-import { MyContext } from "../../index";
-import { User, getCurrentRoomUID } from "../../users/UserManager";
 
 const APP_ID = "16cca950aca74708a9c3f1e2b7f2e655";
 const APP_CERTIFICATE = "3a224adcf8e24a808a6906179379221b";
@@ -20,17 +20,31 @@ export default function Roles(props: any) {
   const [roleId, setRoleId] = useState<number | null>(null);
 
   useEffect(() => {
+    // ----- 初始化 roles -----
     const res = Play.getPlayInfo(1)
-    setRoles(res.roles as [])
+    const rs = (res?.roles || []).map((r: any) => {
+      return {
+        ...r,
+        choosed: false,
+      }
+    })
+    setRoles(rs as [])
+
+    // ----- 更新角色选中信息 -----
+    event.on("room", (room: any) => {
+      room.addMagixEventListener("updateRoles", (res: any) => {
+        const { payload } = res;
+        const search_obj = search_parse();
+        const uid = search_obj['uid'];
+        if (payload?.roomUserId !== uid && payload?.roles) {
+          setRoles(payload?.data)
+        }
+      });
+    });
   }, [])
 
   const itemClick = (rtcClient: IAgoraRTCClient, id: number, context: GlobalContext) => {
-    const option = {
-      appid: APP_ID,
-      // channel: CHANNEL_NAME,
-      channel: context.room?.uuid,
-      uid: "0",
-    }
+    // ----- 可操作用户校验 -----
     const curUser = context?.currentUser;
     if (!curUser?.roleId) {
       setRoleId(id);
@@ -47,8 +61,13 @@ export default function Roles(props: any) {
       return;
     }
 
-
+    // ----- 更改用户选中状态，并通过 RTC Client 加入或离开通信通道 -----
     const rs = roles.map((r: any) => {
+      const option: Options = {
+        appid: APP_ID,
+        channel: context.room?.uuid || CHANNEL_NAME,
+        uid: "0",
+      }
       if (r.id === id) {
         if (r.choosed) {
           leave(rtcClient, audioTrack);
@@ -73,8 +92,18 @@ export default function Roles(props: any) {
       }
     })
     setRoles(rs as []);
+
+    const search_obj = search_parse();
+    const uid = search_obj['uid'];
+    window.room.dispatchMagixEvent("updateRoles", {
+      roomUserId: uid,
+      data: rs
+    });
   }
 
+  /**
+   * 渲染用户节点
+   */
   const renderRoles = useCallback((context: any) => {
     const items: JSX.Element[] = [];
     const rtcClient = getRtcClient();
